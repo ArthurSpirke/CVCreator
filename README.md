@@ -15,4 +15,4 @@ __List of hotfix:__
 5. Fix simple HTML format
 
 
-After this, the project will be moved to its own web domain and all properties and urls will be correct, not an “example.com”.
+We have our own domain - cvcreator-service.com !
