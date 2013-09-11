@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="com.arthurspirke.cvcreator.entity.domain.*, com.arthurspirke.cvcreator.entity.enums.*, com.arthurspirke.cvcreator.util.*, java.util.List,com.arthurspirke.cvcreator.dblayer.*, java.util.ResourceBundle" %>
+    <%@ page import="com.arthurspirke.cvcreator.entity.business.*, com.arthurspirke.cvcreator.entity.enums.*, com.arthurspirke.cvcreator.util.*, java.util.List,com.arthurspirke.cvcreator.dblayer.*, java.util.ResourceBundle" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +29,7 @@
 <%
 ResourceBundle res = (ResourceBundle) request.getAttribute("res");
 Object obj = request.getAttribute("person");
-PersonalInfo person = (PersonalInfo) obj;
+Person person = (Person) obj;
 Language lang = (Language) request.getAttribute("lang");
 %>
 
@@ -70,11 +70,11 @@ Language lang = (Language) request.getAttribute("lang");
                                <div class="span3">
                                  <%
                                  out.println("<span class=\"exampleInfo\" id=\"firstNameE\">" + res.getString("$firstNameE") + "</span><br>");
-                                 out.println("<input type=\"text\" id=\"firstName\" size=\"25\" value=\"" + person.getFirstName() + "\" data-person-id=\"" + person.getId() + "\"><br>");
+                                 out.println("<input type=\"text\" id=\"firstName\" size=\"25\" value=\"" + person.getPersonalInfo().getFirstName() + "\" data-person-id=\"" + person.getId() + "\"><br>");
                                  out.println("<span class=\"exampleInfo\" id=\"lastNameE\">" + res.getString("$lastNameE") + "</span><br>");
-                                 out.println("<input type=\"text\" id=\"lastName\" size=\"25\" value=\"" + person.getSecondName() + "\"><br>");
+                                 out.println("<input type=\"text\" id=\"lastName\" size=\"25\" value=\"" + person.getPersonalInfo().getSecondName() + "\"><br>");
                                  out.println("<span class=\"exampleInfo\" id=\"eMailE\">" + res.getString("$eMailE") + "</span><br>");
-                                 out.println("<input type=\"text\" id=\"eMail\" size=\"50\" value=\"" + person.geteMail() + "\"><br>");
+                                 out.println("<input type=\"text\" id=\"eMail\" size=\"50\" value=\"" + person.getPersonalInfo().geteMail() + "\"><br>");
                                  %>
                                </div>
                            </div>
@@ -95,16 +95,16 @@ Language lang = (Language) request.getAttribute("lang");
                                 <%
                                 out.println("<div class=\"selectBlock\" id=\"mainSelectBlock\">");
                                 out.println("<span class=\"exampleInfo countryExampleInfo\">" + res.getString(".countryExampleInfo") + "</span><br>");
-                                out.println("<select class=\"selectCountryClass countrySelect\" id=\"personCountry\" onchange=\"change('personCountry', 'personRegion', 'region_c')\">" + HTMLUtils.getOptionsCountriesList(lang, person.getCountry()) + "</select>");
+                                out.println("<select class=\"selectCountryClass countrySelect\" id=\"personCountry\" onchange=\"change('personCountry', 'personRegion', 'region_c')\">" + HTMLUtils.getOptionsCountriesList(lang, person.getAddress().getCountryId()) + "</select>");
                                 out.println("<span class=\"exampleInfo regionExampleInfo\">" + res.getString(".regionExampleInfo") + "</span><br>");
-                                out.println("<select class=\"placesSelect regionSelect\" id=\"personRegion\" onchange=\"change('personRegion', 'personCity', 'city_c')\">" + HTMLUtils.getOptionsRegionsList(lang, person.getRegion(), person.getCountry()) + "</select>");
+                                out.println("<select class=\"placesSelect regionSelect\" id=\"personRegion\" onchange=\"change('personRegion', 'personCity', 'city_c')\">" + HTMLUtils.getOptionsRegionsList(lang, person.getAddress().getRegionId(), person.getAddress().getCountryId()) + "</select>");
                                 out.println("<span class=\"exampleInfo cityExampleInfo\">" + res.getString(".cityExampleInfo") + "</span><br>");
-                                out.println("<select class=\"placesSelect citySelect\" id=\"personCity\">" + HTMLUtils.getOptionsCitiesList(lang, person.getCity(), person.getRegion()) + "</select>"); 
+                                out.println("<select class=\"placesSelect citySelect\" id=\"personCity\">" + HTMLUtils.getOptionsCitiesList(lang, person.getAddress().getCityId(), person.getAddress().getRegionId()) + "</select>"); 
                                 out.println("</div>");
                                 out.println("<span class=\"exampleInfo\" id=\"addressE\">" + res.getString("$addressE") + "</span><br>");
-                                out.println("<input type=\"text\" id=\"address\" size=\"50\" value=\"" + person.getAddress() + "\">");
+                                out.println("<input type=\"text\" id=\"address\" size=\"50\" value=\"" + person.getAddress().getStreet() + "\">");
                                 out.println("<span class=\"exampleInfo\" id=\"zipCode\">" + res.getString("$zipCode") + "</span><br>");
-                                out.println("<input type=\"text\" id=\"zipCode\" size=\"50\" value=\"" + person.getZipCode() + "\">");            
+                                out.println("<input type=\"text\" id=\"zipCode\" size=\"50\" value=\"" + person.getAddress().getPostalCode() + "\">");            
                                 %>
                                </div>
                            </div>
@@ -204,7 +204,7 @@ List<PersonLinks> personLinks = person.getPersonLinks();
                         <div class="span8">
                         <%
                         out.println("<span class=\"exampleInfo\" id=\"$claimPositionE\">" + res.getString("$claimPositionE") + "</span><br>");
-                        out.println("<input type=\"text\" id=\"claimPosition\" size=\"50\" value=\"" + person.getClaimPosition() + "\" class=\"input-large\">");
+                        out.println("<input type=\"text\" id=\"claimPosition\" size=\"50\" value=\"" + person.getPersonalInfo().getClaimPosition() + "\" class=\"input-large\">");
                         %>
                         </div>
                       </div>
@@ -223,7 +223,7 @@ List<PersonLinks> personLinks = person.getPersonLinks();
                           <div class="span8">
                            <%
                            out.println("<span class=\"exampleInfo\" id=\"$profileE\">" + res.getString("$profileE") + "</span><br>");
-                           out.println("<textarea id=\"profile\" rows=\"10\" class=\"span10\">" + person.getProfile() + "</textarea>");
+                           out.println("<textarea id=\"profile\" rows=\"10\" class=\"span10\">" + person.getPersonalInfo().getProfile() + "</textarea>");
                            %>
                           </div>
                       </div>
@@ -243,7 +243,7 @@ List<PersonLinks> personLinks = person.getPersonLinks();
                           <div class="span8">
                            <%
                            out.println("<span class=\"exampleInfo\" id=\"hobbiesE\">" + res.getString("$hobbiesE") + "</span><br>");
-                           out.println("<textarea id=\"hobbies\" rows=\"10\" class=\"span10\">" + person.getHobbies() + "</textarea>");
+                           out.println("<textarea id=\"hobbies\" rows=\"10\" class=\"span10\">" + person.getPersonalInfo().getHobbies() + "</textarea>");
                            %>
                           </div>
                       </div>
@@ -311,7 +311,7 @@ out.println("<h2><span id=\"educationTitle\">" + res.getString("$educationTitle"
 
 <%
 for(Education edu : education){
-	    Integer eduId = edu.getId();
+	    String eduId = edu.getId();
 	
         	    
         out.println("<!-- Block of Education-->");
@@ -337,13 +337,13 @@ for(Education edu : education){
 
 
 	    out.println("<span class=\"exampleInfo eduTypeE\"></span><br>");	    
-	    out.println("<select class=\"eduType\" size=\"1\">" + HTMLUtils.getOptionsListHTMLByType(res.getString(".eduType").split(","), edu.getEduType()) + "</select><br>");
+	    out.println("<select class=\"eduType\" size=\"1\">" + HTMLUtils.getOptionsListHTMLByType(res.getString(".eduType").split(","), edu.getType()) + "</select><br>");
 	    out.println("<span class=\"exampleInfo eduTitleE\">" + res.getString(".eduTitleE") + "</span><br>");
-        out.println("<input type=\"text\" name=\"eduTitle\" size=\"30\" value=\""+ edu.getEduTitle() +"\" data-entity-id=\"" + edu.getId() + "\" data-state=\"upd\"><br>");
+        out.println("<input type=\"text\" name=\"eduTitle\" size=\"30\" value=\""+ edu.getTitle() +"\" data-entity-id=\"" + edu.getId() + "\" data-state=\"upd\"><br>");
 	    out.println("<span class=\"exampleInfo allYearsE\">" + res.getString(".allYears") + "</span><br>");
-	    out.println("<input type=\"text\" name=\"eduYears\" size=\"15\" value=\"" + edu.getEduYears() + "\"><br>");    
+	    out.println("<input type=\"text\" name=\"eduYears\" size=\"15\" value=\"" + edu.getYears() + "\"><br>");    
         out.println("<span class=\"exampleInfo eduDegreeE\"></span><br>");
-        out.println("<input type=\"text\" name=\"eduDegree\" size=\"30\" value=\"" + edu.getEduDegree() + "\"><br>");
+        out.println("<input type=\"text\" name=\"eduDegree\" size=\"30\" value=\"" + edu.getDegree() + "\"><br>");
 	    
 	    out.println("</div>");
 	    out.println("</div>");
@@ -362,11 +362,11 @@ for(Education edu : education){
 
 	    out.println("<div class=\"selectBlock\" id=\"eduSelectBlock" + eduId + "\">");
 	    out.println("<span class=\"exampleInfo countryExampleInfo\">" + res.getString(".countryExampleInfo") + "</span><br>");
-	    out.println("<select size=\"1\" name=\"educationCountryName\" class=\"educationCo selectCountryClass countrySelect\" id=\"eduCountry" + eduId + "\" onchange=\"change('eduCountry'" + eduId + "', 'eduRegion" + eduId + "', 'region_c')\" >" + HTMLUtils.getOptionsCountriesList(lang, edu.getEduCountry()) + "</select><br>");
+	    out.println("<select size=\"1\" name=\"educationCountryName\" class=\"educationCo selectCountryClass countrySelect\" id=\"eduCountry" + eduId + "\" onchange=\"change('eduCountry'" + eduId + "', 'eduRegion" + eduId + "', 'region_c')\" >" + HTMLUtils.getOptionsCountriesList(lang, edu.getAddress().getCountryId()) + "</select><br>");
 	    out.println("<span class=\"exampleInfo regionExampleInfo\">" + res.getString(".regionExampleInfo") + "</span><br>");
-	    out.println("<select size=\"1\" name=\"educationRegionName\" class=\"placesSelect regionSelect\" id=\"eduRegion" + eduId + "\" onchange=\"change('eduRegion" + eduId + "', 'eduCity" + eduId + "', 'city_c')\">" + HTMLUtils.getOptionsRegionsList(lang, edu.getEduRegion(), edu.getEduCountry()) + "</select><br>");
+	    out.println("<select size=\"1\" name=\"educationRegionName\" class=\"placesSelect regionSelect\" id=\"eduRegion" + eduId + "\" onchange=\"change('eduRegion" + eduId + "', 'eduCity" + eduId + "', 'city_c')\">" + HTMLUtils.getOptionsRegionsList(lang, edu.getAddress().getRegionId(), edu.getAddress().getCountryId()) + "</select><br>");
 	    out.println("<span class=\"exampleInfo cityExampleInfo\">" + res.getString(".cityExampleInfo") + "</span><br>");
-	    out.println("<select size=\"1\" name=\"educationCityName\" class=\"placesSelect citySelect\" id=\"eduCity" + eduId + "\">" + HTMLUtils.getOptionsCitiesList(lang, edu.getEduCity(), edu.getEduRegion()) + "</select><br>");
+	    out.println("<select size=\"1\" name=\"educationCityName\" class=\"placesSelect citySelect\" id=\"eduCity" + eduId + "\">" + HTMLUtils.getOptionsCitiesList(lang, edu.getAddress().getCityId(), edu.getAddress().getRegionId()) + "</select><br>");
 	    out.println("</div>");
 	    
 	    out.println("</div>");
@@ -386,7 +386,7 @@ for(Education edu : education){
 	    out.println("<div class=\"span8\">");
 
 	    out.println("<span class=\"exampleInfo eduDescriptionE\">" + res.getString(".eduDescriptionE") + "</span><br>");
-	    out.println("<textarea class=\"span8\" name=\"eduDescription\" rows=\"10\">" + edu.getEduDescription() + "</textarea>");
+	    out.println("<textarea class=\"span8\" name=\"eduDescription\" rows=\"10\">" + edu.getDescription() + "</textarea>");
 
 	    out.println("</div>");
 	    out.println("</div>");
@@ -423,8 +423,8 @@ out.println("<h2><span id=\"employmentTitle\">" + res.getString("$employmentTitl
 
 
 <%
-for(EmploymentHistory emp : employment){
-Integer empId = emp.getId();
+	for(EmploymentHistory emp : employment){
+String empId = emp.getId();
 
 out.println("<!-- Block of Employment -->");
 out.println("<div id=\"emp" + empId + "\">");
@@ -447,11 +447,11 @@ out.println("<!-- Inputs -->");
 out.println("<div class=\"span3\">");
 
 out.println("<span class=\"exampleInfo empTitleE\">" + res.getString(".empTitleE") + "</span><br>");
-out.println("<input type=\"text\" name=\"empTitle\" size=\"30\" value=\"" + emp.getEmpTitle() + "\" data-companylink=\"compLink" + empId + "\" data-entity-id=\"" + emp.getId() + "\" data-state=\"upd\"><br>");
+out.println("<input type=\"text\" name=\"empTitle\" size=\"30\" value=\"" + emp.getTitle() + "\" data-companylink=\"compLink" + empId + "\" data-entity-id=\"" + emp.getId() + "\" data-state=\"upd\"><br>");
 out.println("<span class=\"exampleInfo allYearsE\">" + res.getString(".allYears") + "</span><br>");
-out.println("<input type=\"text\" name=\"empYears\" size=\"25\" value=\"" + emp.getEmpYears() + "\"><br>");
+out.println("<input type=\"text\" name=\"empYears\" size=\"25\" value=\"" + emp.getYears() + "\"><br>");
 out.println("<span class=\"exampleInfo empPositionE\">" + res.getString(".empPositionE") + "</span><br>");
-out.println("<input type=\"text\" name=\"empPosition\" size=\"25\" value=\"" + emp.getEmpPosition() + "\"><br>");
+out.println("<input type=\"text\" name=\"empPosition\" size=\"25\" value=\"" + emp.getPosition() + "\"><br>");
 
 
 out.println("</div>");
@@ -471,11 +471,11 @@ out.println("<div class=\"span3\">");
 
 out.println("<div class=\"selectBlock\" id=\"empSelectBlock" + empId + "\">");
 out.println("<span class=\"exampleInfo countryExampleInfo\">" + res.getString(".countryExampleInfo") + "</span><br>");
-out.println("<select size=\"1\" name=\"employmentCountryName\" class=\"employmentCo selectCountryClass countrySelect\" id=\"empCountry" + empId + "\" onchange=\"change('empCountry" + empId + "', 'empRegion" + empId + "', 'region_c')\">" + HTMLUtils.getOptionsCountriesList(lang, emp.getEmpCountry()) + "</select><br>");
+out.println("<select size=\"1\" name=\"employmentCountryName\" class=\"employmentCo selectCountryClass countrySelect\" id=\"empCountry" + empId + "\" onchange=\"change('empCountry" + empId + "', 'empRegion" + empId + "', 'region_c')\">" + HTMLUtils.getOptionsCountriesList(lang, emp.getAddress().getCountryId()) + "</select><br>");
 out.println("<span class=\"exampleInfo regionExampleInfo\">" + res.getString(".regionExampleInfo") + "</span><br>");
-out.println("<select size=\"1\" name=\"employmentRegionName\" class=\"placesSelect regionSelect\" id=\"empRegion" + empId + "\" onchange=\"change('empRegion" + empId + "', 'empCity" + empId + "', \'city_c\')\">" + HTMLUtils.getOptionsRegionsList(lang, emp.getEmpRegion(), emp.getEmpCountry()) + "</select><br>");
+out.println("<select size=\"1\" name=\"employmentRegionName\" class=\"placesSelect regionSelect\" id=\"empRegion" + empId + "\" onchange=\"change('empRegion" + empId + "', 'empCity" + empId + "', \'city_c\')\">" + HTMLUtils.getOptionsRegionsList(lang, emp.getAddress().getRegionId(), emp.getAddress().getCountryId()) + "</select><br>");
 out.println("<span class=\"exampleInfo cityExampleInfo\">" + res.getString(".cityExampleInfo") + "</span><br>");
-out.println("<select size=\"1\" id=\"empCity" + empId + "\" class=\"placesSelect citySelect\" name=\"employmentCityName\">" + HTMLUtils.getOptionsCitiesList(lang, emp.getEmpCity(), emp.getEmpRegion()) + "</select><br>");
+out.println("<select size=\"1\" id=\"empCity" + empId + "\" class=\"placesSelect citySelect\" name=\"employmentCityName\">" + HTMLUtils.getOptionsCitiesList(lang, emp.getAddress().getCityId(), emp.getAddress().getRegionId()) + "</select><br>");
 out.println("</div>");
 out.println("</div>");
 out.println("</div>");
@@ -483,11 +483,11 @@ out.println("</div>");
 out.println("</div>");
 
 
-List<ProjectOnJob> project = emp.getProjects();
+List<Project> project = emp.getProjects();
 
 out.println("<h3><span class=\"projectTitle\">" + res.getString(".projectTitle") + "</span></h3>");
 out.println("<div id=\"addition-projects" + empId + "\" class=\"addProjects\">");
-for(ProjectOnJob proj : project){
+for(Project proj : project){
 
 out.println("<!-- Block of Project to Employment History Block (if in this EH we have more then zero projects :) )-->");
 out.println("<div id=\"proj" + proj.getId() + "\">");
@@ -508,11 +508,11 @@ out.println("<!-- Inputs -->");
 out.println("<div class=\"span7\">");
 
 out.println("<span class=\"exampleInfo projTitleE\">" + res.getString(".projTitleT") + "</span><br>");
-out.println("<input type=\"text\" name=\"projTitle\" size=\"30\" value=\"" + proj.getProjTitle() + "\" placeholder=\"Web Mail\" data-companylink=\"compLink" + empId + "\" data-entity-id=\"" + proj.getId() + "\" data-state=\"upd\"><br>");
+out.println("<input type=\"text\" name=\"projTitle\" size=\"30\" value=\"" + proj.getTitle() + "\" placeholder=\"Web Mail\" data-companylink=\"compLink" + empId + "\" data-entity-id=\"" + proj.getId() + "\" data-state=\"upd\"><br>");
 out.println("<span class=\"exampleInfo allYearsE\">" + res.getString(".allYears") + "</span><br>");
-out.println("<input type=\"text\" name=\"projYears\" size=\"30\" value=\"" + proj.getProjYears() + "\" placeholder=\"2009 - 2011\"><br>");
+out.println("<input type=\"text\" name=\"projYears\" size=\"30\" value=\"" + proj.getYears() + "\" placeholder=\"2009 - 2011\"><br>");
 out.println("<span class=\"exampleInfo projPositionE\">" + res.getString(".projPositionE") + "</span><br>");
-out.println("<input type=\"text\" name=\"projPosition\" size=\"30\" value=\"" + proj.getProjPosition() + "\" placeholder=\"Team Lead\"><br>");
+out.println("<input type=\"text\" name=\"projPosition\" size=\"30\" value=\"" + proj.getPosition() + "\" placeholder=\"Team Lead\"><br>");
 
 out.println("</div>");
 out.println("</div>");
@@ -530,7 +530,7 @@ out.println("<!-- Text area -->");
 out.println("<div class=\"span8\">");
 
 out.println("<span class=\"exampleInfo projDescriptionE\">" + res.getString(".projDescriptionE") + "</span><br>");
-out.println("<textarea name=\"projDescription\" class=\"span8\" rows=\"10\" placeholder=\"About the project and my role in it\">" + proj.getProjDescription() + "</textarea><br>");
+out.println("<textarea name=\"projDescription\" class=\"span8\" rows=\"10\" placeholder=\"About the project and my role in it\">" + proj.getDescription() + "</textarea><br>");
 
 out.println("</div>");
 out.println("</div>");
@@ -567,7 +567,7 @@ out.println("<!-- Textarea -->");
 out.println("<div class=\"span8\">");
 
 out.println("<span class=\"exampleInfo empDescriptionE\">" + res.getString(".empDescriptionE") + "</span><br>");
-out.println("<textarea class=\"span8\" name=\"empDescription\" rows=\"10\">" + emp.getEmpDescription() + "</textarea>");
+out.println("<textarea class=\"span8\" name=\"empDescription\" rows=\"10\">" + emp.getDescription() + "</textarea>");
 
 out.println("</div>");
 out.println("</div>");

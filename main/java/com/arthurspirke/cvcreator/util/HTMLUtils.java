@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.entity.enums.Types;
-import com.arthurspirke.cvcreator.entityfactory.PlacesFactory;
+import com.arthurspirke.cvcreator.service.PlacesService;
 
 public class HTMLUtils {
 
@@ -38,21 +38,24 @@ public class HTMLUtils {
 	
 
    public static String getOptionsCountriesList(Language lang, int selectedPlaceId){
-	   Map<Integer, String> countryMap = PlacesFactory.getMapPlacesByLang(PlacesFactory.getCountryMap(), lang);
+	   PlacesService service = new PlacesService(lang);
+	   Map<Integer, String> countryMap = service.getCountryIdNameMap();
 	   return getOptionsListBody(countryMap, selectedPlaceId).toString();	
    }
    
    
    public static String getOptionsRegionsList(Language lang, Integer selectedPlaceId, Integer countryId){
 	   if(countryId.equals(0)) return "";
-	   Map<Integer, String> regionMap = PlacesFactory.getMapPlacesByLang(PlacesFactory.getRegionMap(countryId), lang);
+	   PlacesService service = new PlacesService(lang);
+	   Map<Integer, String> regionMap = service.getRegionIdNameMap(countryId);
 	   return getOptionsListBody(regionMap, selectedPlaceId).toString();	
    }
    
    
    public static String getOptionsCitiesList(Language lang, Integer selectedPlacesId, Integer regionId){
        if(regionId.equals(0)) return "";
-       Map<Integer, String> cityMap = PlacesFactory.getMapPlacesByLang(PlacesFactory.getCityMap(regionId), lang);
+       PlacesService service = new PlacesService(lang);
+       Map<Integer, String> cityMap = service.getCityIdNameMap(regionId);
 	   return getOptionsListBody(cityMap, selectedPlacesId).toString();	   
    }
    

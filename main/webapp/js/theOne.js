@@ -2,7 +2,7 @@
 #
 #
 # File name - theOne.js
-# Create Date - 2013/08/20 19:08:06
+# Create Date - 2013/09/11 12:38:16
 #
 # Created by JSPack (https://github.com/ArthurSpirke/JSPack)
 #
@@ -250,7 +250,7 @@ function getEmploymentBlockStructure(){
        + '</div>'
        + '<div class="span5">'
        + '<span class="exampleInfo empTitleE"></span><br>'
-       + '<input type="text" name="empTitle" size="30" value="" data-companylink="compLink' + blockId + '" data-entity-id="0" data-state="new"><br>'
+       + '<input type="text" name="empTitle" size="30" value="" data-block-id="' + blockId + '" data-entity-id="0" data-state="new"><br>'
        + '<span class="exampleInfo allYears"></span><br>'
        + '<input type="text" name="empYears" size="25" value=""><br>'
        + '<span class="exampleInfo empPositionE"></span><br>'
@@ -349,6 +349,7 @@ function addProjectsStructure(nameOfParentElem, companyId){
 function getProjectBlockStructure(companyId){
     var rand = getRandomInteger();
     var projectStructure = document.createElement('div');
+    projectStructure.dataset.blockId = parseInt(rand);
     projectStructure.id = 'project' + parseInt(rand);
     projectStructure.style['backgroundColor'] = '#bada55';
     projectStructure.innerHTML = '<div class="span10">'
@@ -361,11 +362,11 @@ function getProjectBlockStructure(companyId){
         + '</div>'
         + '<div class="span5">'
         + '<span class="exampleInfo projTitleE"></span><br>'
-        + '<input type="text" name="projTitle" size="30" value="" data-company-id="0" data-companylink="compLink' + companyId + '" data-entity-id="0" data-state="new"><br>'
+        + '<input type="text" id="projTitle' + parseInt(rand) + '" name="projTitle" size="30" value="" data-company-id="0" data-companylink="compLink' + companyId + '" data-entity-id="0" data-state="new"><br>'
         + '<span class="exampleInfo allYearsE"></span><br>'
-        + '<input type="text" name="projYears" size="30" value=""><span class="checkInfo"></span><br>'
+        + '<input type="text" id="projYears' + parseInt(rand) + '" name="projYears" size="30" value=""><span class="checkInfo"></span><br>'
         + '<span class="exampleInfo projPositionE"></span><br>'
-        + '<input type="text" name="projPosition" size="30" value=""><span class="checkInfo"></span><br>'
+        + '<input type="text" id="projPosition' + parseInt(rand) + '" name="projPosition" size="30" value=""><span class="checkInfo"></span><br>'
         + '</div>'
         + '</div>'
         + '</div>'
@@ -376,7 +377,7 @@ function getProjectBlockStructure(companyId){
         + '</div>'
         + '<div class="span8">'
         + '<span class="exampleInfo projDescriptionE"></span><br>'
-        + '<textarea name="projDescription" class="span8" rows="10"></textarea><span class="checkInfo"></span><br>'
+        + '<textarea id="projDescription' + parseInt(rand) + '" name="projDescription" class="span8" rows="10"></textarea><span class="checkInfo"></span><br>'
         + '</div>'
         + '</div>'
         + '</div>'
@@ -414,7 +415,7 @@ function addCertificateBlock(){
 
 
 function changeStaticInfoFromServer(lang, type){
-    var url = "http://example.com/StaticItemsLocale?lang=" + lang + "&type=" + type;
+    var url = "http://cvcreator-service.com:8080/CVCreator/FieldsTitlesLangController?lang=" + lang + "&type=" + type;
     var XHR = window.XMLHttpRequest || window.XDomainRequest;
     var xhr = new XHR();
 
@@ -473,8 +474,8 @@ function generateResume(){
 
 	if(true)
     {
-	var json = createDataToServer("create");
-    var url = "http://example.com/GenerateResumeController";
+	var json = createDataToServer("GENERATE");
+    var url = "http://cvcreator-service.com:8080/CVCreator/GenerateResumeController";
     var XHR = window.XMLHttpRequest || window.XDomainRequest;
     var xhr = new XHR();
    
@@ -536,7 +537,7 @@ function generateResume(){
     };
 
     xhr.send(json);
-    document.getElementById("main-page").innerHTML = '<center><img src="http://example.com/loading.gif"></center>';
+    document.getElementById("main-page").innerHTML = '<center><img src="http://ser.optivisions.ru/styleimg/loading.gif"></center>';
     
     } else {
 		 alert('Input you data!')
@@ -549,9 +550,9 @@ function generateResume(){
 
 //Preview in modal window PDF CV with intermediate data.
 function generatePreview(){
-	var json = createDataToServer("preview");
+	var json = createDataToServer("PREVIEW");
 
-    var url = "http://example.com/GenerateResumeController";
+    var url = "http://cvcreator-service.com:8080/CVCreator/GenerateResumeController";
     var XHR = window.XMLHttpRequest || window.XDomainRequest;
     var xhr = new XHR();
 
@@ -594,9 +595,8 @@ function generateUpdateResume() {
 	// alert(res);
 	if (true) {
 
-		var json = createDataToServer("update");
-
-		var url = "http://example.com/GenerateResumeController";
+		var json = createDataToServer("UPDATE");
+		var url = "http://cvcreator-service.com:8080/CVCreator/GenerateResumeController";
 		var XHR = window.XMLHttpRequest || window.XDomainRequest;
 		var xhr = new XHR();
 
@@ -630,7 +630,7 @@ function generateUpdateResume() {
 
 
 function loadPlacesByNewLang(json){
-    var url = "http://example.com/SelectLocaleChangesController";
+    var url = "http://cvcreator-service.com:8080/CVCreator/OptionsLangChangesController";
     var XHR = window.XMLHttpRequest || window.XDomainRequest;
     var xhr = new XHR();
 
@@ -659,7 +659,7 @@ function loadPlacesByNewLang(json){
 
 
 function loadRegionOrCity(selectCountryId, changeSelect, typeOfChangingElement){
-    var url = "http://example.com/CountryListController?type=" + typeOfChangingElement + "&id=" + selectCountryId + "&selectLang=" + getPrefLang();
+    var url = "http://cvcreator-service.com:8080/CVCreator/PlacesController?type=" + typeOfChangingElement + "&id=" + selectCountryId + "&selectLang=" + getPrefLang();
     var XHR = window.XMLHttpRequest || window.XDomainRequest;
     var xhr = new XHR();
 
@@ -727,14 +727,16 @@ var certificateCount = 0;
 
 function createDataToServer(operationType){
     var json = {
-        phoneNumbers : getPhonesNumber(),
-        personLinks : getPersonLinks(),
-        skills : getSkills(),
-        education : getEducation(),
-        employment : getEmployment(),
-        projects : getProjects(),
-        certificate : getCertificate(),
-        person: new Person(),
+        "address" : getPersonAddress(),
+        "personalInfo": getPersonalInfo(),
+        "personalTemplates": getPersonTemplates(),
+        "personLinks": getPersonLinks(),
+        "phoneNumbers": getPhonesNumber(),
+        "skills" : getSkills(),
+        "education" : getEducation(),
+        "employmentHistory" : getEmployment(),
+        "certificate": getCertificate(),
+        "person" : new Person(),
         "operationType": operationType
     };
 
@@ -743,29 +745,71 @@ function createDataToServer(operationType){
 }
 
 function Person(){
-    this.personId = document.getElementById('firstName').dataset.personId + '';
-    this.firstName = document.getElementById("firstName").value;
-    this.lastName = document.getElementById("lastName").value;
-    this.claimPosition = document.getElementById("claimPosition").value;
-    this.eMail = document.getElementById("eMail").value;
-    this.personCountry = createOptionsIdToServer(document.getElementById('personCountry').options);
-    this.personRegion = createOptionsIdToServer(document.getElementById('personRegion').options);
-    this.personCity = createOptionsIdToServer(document.getElementById('personCity').options);
-    this.zipCode = document.getElementById("zipCode").value;
-    this.address = document.getElementById("address").value;
-    this.profile = document.getElementById("profile").value;
-    this.hobbies = document.getElementById("hobbies").value;
-    this.templatePDF = 'simple_pdf_template';
-    this.templateHTML = 'simple_html_template';
+    this.id = document.getElementById('firstName').dataset.personId + '';
     this.prefLang = getPrefLang();
     this.phoneNumbersCount = phoneNumbersCount + '';
     this.personLinksCount = personLinksCount + '';
     this.skillsCount = skillsCount + '';
-    this.educationCount = educationCount + '';
-    this.employmentCount = employmentCount + '';
-    this.projectsCount = projectsCount + '';
-    this.certificateCount = certificateCount + '';
-    alert('Person good');
+    this.eduCount = educationCount + '';
+    this.empCount = employmentCount + '';
+    this.certeCount = certificateCount + '';
+
+}
+
+function PersonalInfo(){
+    this.id = document.getElementById('firstName').dataset.personId + '';
+    this.firstName = document.getElementById("firstName").value;
+    this.lastName = document.getElementById("lastName").value;
+    this.claimPosition = document.getElementById("claimPosition").value;
+    this.eMail = document.getElementById("eMail").value;
+    this.profile = document.getElementById("profile").value;
+    this.hobbies = document.getElementById("hobbies").value;
+    this.state = 'new';
+}
+
+function getPersonalInfo(){
+    var simpleArray = [];
+    simpleArray.push(new PersonalInfo());
+    return simpleArray;
+}
+
+function Address(id, countryId, regionId, cityId, postalCode, address){
+    this.id = '0'; //for time
+    this.countryId = countryId;
+    this.regionId = regionId;
+    this.cityId = cityId;
+    this.postalCode = postalCode;
+    this.streetAddress = address;
+    this.prefLang = getPrefLang();
+    this.state = 'new';
+
+}
+
+function getPersonAddress(){
+    var id = document.getElementById('firstName').dataset.personId + '';
+    var countryId = createOptionsIdToServer(document.getElementById('personCountry').options);
+    var regionId = createOptionsIdToServer(document.getElementById('personRegion').options);
+    var cityId = createOptionsIdToServer(document.getElementById('personCity').options);
+    var streetAddress = document.getElementById('address').value;
+    var postalCode = document.getElementById("zipCode").value;
+
+    var simpleArray = [];
+    simpleArray.push(new Address(id, countryId, regionId, cityId, postalCode, streetAddress));
+    return simpleArray;
+}
+
+function PersonTemplates(){
+    this.id = document.getElementById('firstName').dataset.personId + '';
+    this.templatePDF = 'SIMPLE_PDF';
+    this.templateHTML = 'SIMPLE_HTML';
+    this.templateDOC = 'SIMPLE_DOC';
+    this.state = 'new';
+}
+
+function getPersonTemplates(){
+    var simpleArray = [];
+    simpleArray.push(new PersonTemplates());
+    return simpleArray;
 }
 
 function PhoneNumbers(type, number, entityId, stat){
@@ -796,30 +840,40 @@ function Education(type, title, years, degree, country, region, city, desc, enti
     this.eduTitle = title;
     this.eduYears = years;
     this.eduDegree = degree;
-    this.eduCountry = country;
-    this.eduRegion = region;
-    this.eduCity = city;
+    this.id = '0';//for time
+    this.countryId = country;
+    this.regionId = region;
+    this.cityId = city;
+    this.state = 'new';//for time
     this.eduDescription = desc;
+    this.prefLang = getPrefLang();
 }
 
-function EmploymentHistory(title, years, position, country, region, city, desc, link, entityId, stat){
+function EmploymentHistory(id, title, years, position, addressId, country, region, city, desc, stat, projectsBlockId){
+    this.projects = getProjects(projectsBlockId);
+    var projectCount = projectsCount;
+    this.empMainInfo = new MainEmpInfo(id, stat, title, years, position, desc, projectCount);
+    projectsCount = 0;
+    this.empAddress = new Address(addressId, country, region, city,'', '');
+
+
+
+}
+
+function MainEmpInfo(entityId, stat, title, years, position, desc, projectCount){
     this.empId = entityId;
     this.empState = stat;
     this.empTitle = title;
     this.empYears = years;
     this.empPosition = position;
-    this.empCountry = country;
-    this.empRegion = region;
-    this.empCity = city;
     this.empDescription = desc;
-    this.companyLink = link;
+    this.projectCount = projectCount + '';
 }
 
-function Projects(companyId, link, title, position, years, desc, entityId, stat){
+function Projects(entityId, companyId,title, position, years, desc, stat){
     this.companyId = companyId;
     this.projId = entityId;
     this.projState = stat;
-    this.companyLink = link;
     this.projTitle = title;
     this.projPosition = position;
     this.projYears = years;
@@ -911,6 +965,8 @@ function getEducation(){
 }
 
 function getEmployment(){
+
+    var id = document.getElementsByName('empTitle');
     var title = document.getElementsByName('empTitle');
     var years = document.getElementsByName('empYears');
     var position = document.getElementsByName('empPosition');
@@ -918,12 +974,12 @@ function getEmployment(){
     var region = createArrayOfOptionsIdToServer(document.getElementsByName('employmentRegionName'));
     var city = createArrayOfOptionsIdToServer(document.getElementsByName('employmentCityName'));
     var desc = document.getElementsByName('empDescription');
-    var companyLink = document.getElementsByName('empTitle');
     var returnEmployment = [];
 
     if(title.length != 0){
     for(var i = 0; i < title.length; ++i){
-        returnEmployment.push(new EmploymentHistory(title[i].value, years[i].value, position[i].value, country[i], region[i], city[i], desc[i].value, companyLink[i].dataset.companylink, title[i].dataset.entityId, title[i].dataset.state));
+        var projectBlockId = 'projectBlock' + id[i].dataset.blockId;
+        returnEmployment.push(new EmploymentHistory(id[i].dataset.entityId, title[i].value, years[i].value, position[i].value, id[i].dataset.entityId, country[i], region[i], city[i], desc[i].value, title[i].dataset.state, projectBlockId));
         employmentCount++;
     }
     } else {
@@ -933,22 +989,31 @@ function getEmployment(){
     return returnEmployment;
 }
 
-function getProjects(){
-    var companyId = document.getElementsByName('projTitle');
-    var companyLink = document.getElementsByName('projTitle');
-    var title = document.getElementsByName('projTitle');
-    var years = document.getElementsByName('projYears');
-    var position = document.getElementsByName('projPosition');
-    var desc = document.getElementsByName('projDescription');
+function getProjects(projectBlockId ){
+    var projectBlock = document.getElementById(projectBlockId).childNodes;
     var returnProjects = [];
 
-    if(title.length != 0){
-    for(var i = 0; i < title.length; ++i){
-        returnProjects.push(new Projects(companyId[i].dataset.companyId, companyLink[i].dataset.companylink, title[i].value, years[i].value, position[i].value, desc[i].value, title[i].dataset.entityId, title[i].dataset.state));
-        projectsCount++;
+    if(projectBlock.length == 0){
+        returnProjects.push(new Projects('', '', '', '', '', '', ''));
     }
-    } else {
-        returnProjects.push(new Projects('', '', '', '', '', '', '', ''));
+
+    for(var i = 0; i < projectBlock.length; ++i){
+
+        if(projectBlock[i].tagName === 'DIV'){
+            var concreteProjectBlockId = projectBlock[i].dataset.blockId;
+
+
+
+            var companyId = document.getElementById('projTitle' + concreteProjectBlockId);
+            var title = document.getElementById('projTitle' + concreteProjectBlockId);
+            var years = document.getElementById('projYears' + concreteProjectBlockId);
+            var position = document.getElementById('projPosition' + concreteProjectBlockId);
+            var desc = document.getElementById('projDescription' + concreteProjectBlockId);
+
+            returnProjects.push(new Projects(title.dataset.entityId, companyId.dataset.companyId, title.value, years.value, position.value, desc.value, title.dataset.state));
+            projectsCount++;
+        }
+
     }
 
     return returnProjects;
@@ -1120,7 +1185,7 @@ function change(mainSelect, changeSelect, typeOfChangingElement){
 function uploadFile()
 {
     var ajax = {
-        'url'   : 'http://ser.optivisions.ru:8080/CVCreator/FileUploader',
+        'url'   : 'http://cvcreator-service.com:8080/CVCreator/FileUploadController',
         'form'   : 'fileUploader', 
         'isUpload' : true, 
         'success' : uploadSuccess, 
@@ -1460,7 +1525,7 @@ function onClickEffect(image, nodesName){
     var allTempElem = document.getElementsByClassName(nodesName);
     for(var i = 0; i < allTempElem.length; ++i){
         if(allTempElem[i].name == 'onTemplate'){
-            allTempElem[i].src = 'http://example.com/offClick.png';
+            allTempElem[i].src = 'http://ser.optivisions.ru/styleimg/offClick.png';
             allTempElem[i].name = 'offTemplate';
         }
       }

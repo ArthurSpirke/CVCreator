@@ -12,6 +12,9 @@ public class AppProperties {
 	}
 
 	public static String[] getPersonKeys() {return res.getString("person_keys").split(",");}
+	public static String[] getAddressKeys(){return res.getString("person_address").split(",");}
+	public static String[] getPersonalInfoKeys(){return res.getString("person_info").split(",");}
+	public static String[] getPersonTemplatesKeys(){return res.getString("person_templates").split(",");}
 	public static String[] getPhoneNumbersKeys() {return res.getString("person_phones_keys").split(",");}
 	public static String[] getSkillsKeys() {return res.getString("skills_keys").split(",");}
 	public static String[] getEducationKeys() {return res.getString("education_keys").split(",");}
@@ -50,6 +53,19 @@ public class AppProperties {
 	public static String pathToSkypeIcon(){return res.getString("skype");}	
 	public static String pathToGoogleHahgOutsIcon(){return res.getString("google_hangouts");}
 	public static String getFontTimes(){return res.getString("times");}
+	
+	public static String[] tempEmpMainInfoKeys(){
+		return res.getString("emp_main_info").split(",");
+	}
+	
+	public static String[] tempEmpAddressKeys(){
+		return res.getString("emp_address").split(",");
+	}
+	
+	public static String[] tempProjectsKeys(){
+		return res.getString("emp_projects").split(",");
+	}
+
 	
 	
 

@@ -31,7 +31,7 @@
 <div class="row-fluid">
 <div class="span12">
 <div class="span4">
-<% out.print("<a href=\"http://" + request.getAttribute("pdf") + "\" target=\"_blank\"><img src=\"http://example.com/pdf_pic.jpg\"></a>"); %>
+<% out.print("<a href=\"http://" + request.getAttribute("pdf") + "\" target=\"_blank\"><img src=\"http://ser.optivisions.ru/styleimg/pdf_pic.jpg\"></a>"); %>
 </div>
 </div>
 </div>
@@ -51,7 +51,7 @@ LINK TO DOWNLOAD ALL RESUMES IN ZIP -->
 <div class="row-fluid">
 <div class="span12">
 <!-- try add CENTER attribute in CSS to this text\block -->
-<% out.print("Update CV - <a href=\"example.com/UpdateUserCV?id=" + request.getAttribute("id") + "\"><span class=\"blackLink\">Update Info</span></a><br>"); %>
+<% out.print("Update CV - <a href=\"http://ser.optivisions.ru:8080/CVMaker/UpdateUserCV?id=" + request.getAttribute("id") + "\"><span class=\"blackLink\">Update Info</span></a><br>"); %>
 </div>
 </div>
 <div class="row-fluid">

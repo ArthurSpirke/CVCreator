@@ -11,7 +11,7 @@ import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
 
-import com.arthurspirke.cvcreator.entity.domain.Certificate;
+import com.arthurspirke.cvcreator.entity.business.Certificate;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Image;
 

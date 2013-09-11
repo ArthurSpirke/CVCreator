@@ -1,0 +1,64 @@
+  .input-large {
+            width: 210.0px;
+            height: 17.0px !important;
+            margin-bottom: 10.0px !important;
+            line-height: 14.0px !important;
+            padding: 5.0px 5.0px !important;
+            font-size: 12.0px !important;
+            -webkit-border-radius: 6.0px;
+            -moz-border-radius: 6.0px;
+            border-radius: 6.0px;
+        }
+
+        .input-large[class=input-large] {
+            width: 355.0px;
+        }
+        
+        span.checkInfo{
+           color: red;
+           text-shadow: 0.0px 0.0px 6.0px rgba(255.0,255.0,255.0,0.7);
+           
+        }         
+        .br-fields{
+          line-height: 63.0px;
+        }
+        .exampleInfo{
+          font-size: 8.0pt;
+          color: #858585;
+        }
+        .lang{
+         margin-top: 13.0px;
+        }
+        .style-link{
+          color: white;
+          text-decoration: underline;
+        }
+        .login{
+         margin-top: 14.0px;
+        }
+        .links-block{
+          margin-top: 14.0px;         
+        }
+        a:link{
+          color: white;
+          text-decoration: underline;
+        }
+        .my-text{
+          color: white;
+        }
+        #stepBlock{
+          margin-bottom: 10.0px;
+        }
+        .mynavbar {
+    margin-bottom: 0;
+}
+  .blackLink{
+  	color: black;
+  }
+  
+  input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: red;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: red;
+}

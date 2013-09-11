@@ -48,6 +48,19 @@ public class JSONUtil {
 	return o;
 }
 	
+	public static JSONArray getJSONArray(String jsonRequest) {
+	     JSONParser parser = new JSONParser();
+	     JSONArray o = null;
+	try {
+		o = (JSONArray) parser.parse(jsonRequest);
+
+	} catch (ParseException e) {
+		log.error("Error - " + e);
+	}
+
+	return o;
+}
+	
 	public static List<String> getStringList(Object obj){
 		List<String> result = new ArrayList<>();
 		JSONArray array = (JSONArray) obj;
@@ -66,12 +79,6 @@ public class JSONUtil {
 		
 		for(int i = 0; i < keys.length; i++){
 			returnMap.put(keys[i], (String) obj.get(keys[i]));
-		}
-		
-		//TODO: bad implementation!
-		if("0".equals((String)obj.get("personId"))){
-			String personId = String.valueOf(Utils.getUniqueUserId(returnMap.get("firstName"), returnMap.get("lastName")));
-			returnMap.put("personId", personId);
 		}
 		
 		return returnMap;
@@ -97,6 +104,37 @@ public class JSONUtil {
 	}
 	
 
+	public static List<Map<String, String>> modifyProjectMapInfo(List<Map<String, String>> oldProjectsInfo, String companyId){
+		
+		for(Map<String, String> map : oldProjectsInfo){
+			map.put("companyId", companyId);
+		}
+		
+      	return oldProjectsInfo;
+	}
+	
+	public static List<Map<String, String>> special(Object obj){
+		JSONArray array = (JSONArray) obj;
+		List<Map<String, String>> returnListMap = new ArrayList<>();
+		
+		for(int i = 0; i < array.size(); i++){
+			JSONObject object = (JSONObject) array.get(i);
+			String mainEmpInfo = ((JSONObject)object.get("empMainInfo")).toJSONString();
+		    String empAddress = ((JSONObject)object.get("empAddress")).toJSONString();
+		    String projects = ((JSONArray)object.get("projects")).toJSONString();
+		    
+		    Map<String, String> tempMap = new HashMap<>();
+		    
+		    tempMap.put("empMainInfo", mainEmpInfo);
+		    tempMap.put("empAddress", empAddress);
+		    tempMap.put("projects", projects);
+		    
+		    returnListMap.add(tempMap);
+		}
+
+		return returnListMap;
+	}
+	
 
 
 }
