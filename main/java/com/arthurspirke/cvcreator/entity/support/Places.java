@@ -1,6 +1,6 @@
 package com.arthurspirke.cvcreator.entity.support;
 
-public class Places {
+public class Places{
     protected final int id;
     protected final String ruName;
     protected final String enName;

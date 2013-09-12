@@ -32,19 +32,19 @@ public class PlacesController extends HttpServlet {
 		  
 		  if("country_c".equals(type)){ 
 			  
-			Map<Integer, String> countryMap = placesService.getCountryIdNameMap();
+			Map<String, Integer> countryMap = placesService.getCountryIdNameMap();
 		    obj.put("placesList", JSONGenerator.getJSONReflectionByMapIntegerString(countryMap));
 		    obj.put("placeOptionFirstElement", res.getString("select_country"));
 		    
 		  } else if("region_c".equals(type)){
 			  
-	        Map<Integer, String> regionMap = placesService.getRegionIdNameMap(placeId);
+	        Map<String, Integer> regionMap = placesService.getRegionIdNameMap(placeId);
 	        obj.put("placesList", JSONGenerator.getJSONReflectionByMapIntegerString(regionMap));
 	        obj.put("placeOptionFirstElement", res.getString("select_region"));
 	        
 		  } else if("city_c".equals(type)){
 			  
-			Map<Integer, String> cityMap = placesService.getCityIdNameMap(placeId);
+			Map<String, Integer> cityMap = placesService.getCityIdNameMap(placeId);
 			obj.put("placesList", JSONGenerator.getJSONReflectionByMapIntegerString(cityMap));
 			obj.put("placeOptionFirstElement", res.getString("select_city"));
 			

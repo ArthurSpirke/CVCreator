@@ -1,8 +1,13 @@
 package com.arthurspirke.cvcreator.service;
 
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.arthurspirke.cvcreator.dblayer.PlacesDAO;
 import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcCityDAO;
@@ -38,28 +43,28 @@ public final class PlacesService {
 	}
 	
 	
-	public Map<Integer, String> getCountryIdNameMap(){
+	public Map<String, Integer> getCountryIdNameMap(){
 		List<Places> countries = countryDAO.getPlacesList();
 		return getIdNameMap(countries);
 	}
 	
-	public Map<Integer, String> getRegionIdNameMap(int countryId){
+	public Map<String, Integer> getRegionIdNameMap(int countryId){
 		List<Places> regions = regionDAO.getListByMainPlaceId(countryId);
         return getIdNameMap(regions);
 	}
 	
-	public Map<Integer, String> getCityIdNameMap(int regionId){
+	public Map<String, Integer> getCityIdNameMap(int regionId){
 		List<Places> cities = cityDAO.getListByMainPlaceId(regionId);
 		return getIdNameMap(cities);
 	}
 	
 	
-	protected Map<Integer, String> getIdNameMap(List<Places> places){
+	protected Map<String, Integer> getIdNameMap(List<Places> places){
 		
-		Map<Integer, String> countryIdNameMap = new HashMap<>();
+		Map<String, Integer> countryIdNameMap = new TreeMap<>();
 		
 		for(Places place : places){
-			countryIdNameMap.put(place.getId(), placeNameByLang(place));
+			countryIdNameMap.put(placeNameByLang(place), place.getId());
 		}
 		
 		return countryIdNameMap;
@@ -108,5 +113,7 @@ public final class PlacesService {
 		
 		return place;
 	}
+	
+	
 	
 }

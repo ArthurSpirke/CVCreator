@@ -32,8 +32,8 @@ public class StaticInfo {
 		return getMapFromFieldsArraysNames(getStaticFieldsArraysNames());
 	}
 	
-	public Map<Integer, String> getCountryStaticInfo(){
-		Map<Integer, String> returnMap = getMapCountryListByLang();
+	public Map<String, Integer> getCountryStaticInfo(){
+		Map<String, Integer> returnMap = getMapCountryListByLang();
 		return returnMap;
 	}
 	
@@ -42,7 +42,7 @@ public class StaticInfo {
 	}
 	
 	
-	private Map<Integer, String> getMapCountryListByLang(){
+	private Map<String, Integer> getMapCountryListByLang(){
 		PlacesService service = new PlacesService(lang);
         return service.getCountryIdNameMap();
 	}

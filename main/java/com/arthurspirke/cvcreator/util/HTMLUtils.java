@@ -39,7 +39,7 @@ public class HTMLUtils {
 
    public static String getOptionsCountriesList(Language lang, int selectedPlaceId){
 	   PlacesService service = new PlacesService(lang);
-	   Map<Integer, String> countryMap = service.getCountryIdNameMap();
+	   Map<String, Integer> countryMap = service.getCountryIdNameMap();
 	   return getOptionsListBody(countryMap, selectedPlaceId).toString();	
    }
    
@@ -47,7 +47,7 @@ public class HTMLUtils {
    public static String getOptionsRegionsList(Language lang, Integer selectedPlaceId, Integer countryId){
 	   if(countryId.equals(0)) return "";
 	   PlacesService service = new PlacesService(lang);
-	   Map<Integer, String> regionMap = service.getRegionIdNameMap(countryId);
+	   Map<String, Integer> regionMap = service.getRegionIdNameMap(countryId);
 	   return getOptionsListBody(regionMap, selectedPlaceId).toString();	
    }
    
@@ -55,21 +55,21 @@ public class HTMLUtils {
    public static String getOptionsCitiesList(Language lang, Integer selectedPlacesId, Integer regionId){
        if(regionId.equals(0)) return "";
        PlacesService service = new PlacesService(lang);
-       Map<Integer, String> cityMap = service.getCityIdNameMap(regionId);
+       Map<String, Integer> cityMap = service.getCityIdNameMap(regionId);
 	   return getOptionsListBody(cityMap, selectedPlacesId).toString();	   
    }
    
    
 
-   private static StringBuffer getOptionsListBody(Map<Integer, String> placesNames, Integer selectedPlaceId){
+   private static StringBuffer getOptionsListBody(Map<String, Integer> placesNames, Integer selectedPlaceId){
 	   StringBuffer sb = new StringBuffer();
-	   Set<Integer> keySet = placesNames.keySet();
-	   for(Integer key : keySet){
-		   String name = placesNames.get(key);
-		   if(selectedPlaceId.equals(key)){
-			   sb.append("<option id=\"" + key + "\" value=\"" + name + "\" selected>" + name + "</option>");
+	   Set<String> keySet = placesNames.keySet();
+	   for(String key : keySet){
+		   String name = key;
+		   if(selectedPlaceId.equals(placesNames.get(key))){
+			   sb.append("<option id=\"" + placesNames.get(key) + "\" value=\"" + name + "\" selected>" + name + "</option>");
 		   } else {
-			   sb.append("<option id=\"" + key + "\" value=\"" + name + "\">" + name + "</option>");
+			   sb.append("<option id=\"" + placesNames.get(key) + "\" value=\"" + name + "\">" + name + "</option>");
 		   }
 	   }
 	   return sb;

@@ -31,7 +31,7 @@ public class JSONGenerator {
 		return obj;
 	}
 	
-	public static JSONObject getJsonObjectLocaleCountryList(Map<Integer, String> map){
+	public static JSONObject getJsonObjectLocaleCountryList(Map<String, Integer> map){
 		JSONObject obj = new JSONObject();
 		obj.put(".selectCountryClass", getJSONReflectionByMapIntegerString(map));
 		return obj;
@@ -69,15 +69,15 @@ public class JSONGenerator {
 	}
 	
 	
-	public static JSONArray getJSONReflectionByMapIntegerString(Map<Integer, String> map){
+	public static JSONArray getJSONReflectionByMapIntegerString(Map<String, Integer> map){
 		JSONObject obj = null;
 		JSONArray array = new JSONArray();
-		Set<Integer> keySet = map.keySet();
+		Set<String> keySet = map.keySet();
 		
-		for(Integer key : keySet){
+		for(String key : keySet){
 			obj = new JSONObject();
-			obj.put("placeId", key);
-			obj.put("placeName", map.get(key));
+			obj.put("placeId", map.get(key));
+			obj.put("placeName", key);
 			array.add(obj);
 		}
 		
@@ -123,9 +123,9 @@ public class JSONGenerator {
 
        	 PlacesService placesService = new PlacesService(lang);
        	 
-       	 Map<Integer, String> countryMap = placesService.getCountryIdNameMap();
-       	 Map<Integer, String> regionMap = placesService.getRegionIdNameMap(countryId);
-       	 Map<Integer, String> cityMap = placesService.getCityIdNameMap(regionId);
+       	 Map<String, Integer> countryMap = placesService.getCountryIdNameMap();
+       	 Map<String, Integer> regionMap = placesService.getRegionIdNameMap(countryId);
+       	 Map<String, Integer> cityMap = placesService.getCityIdNameMap(regionId);
 
        	 JSONObject tempJsonObject = new JSONObject();
        	 tempJsonObject.put("countryId", String.valueOf(countryId));
