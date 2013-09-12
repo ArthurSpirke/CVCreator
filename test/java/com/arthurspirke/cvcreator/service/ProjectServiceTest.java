@@ -80,7 +80,7 @@ public class ProjectServiceTest {
 			
 			assertThat(project.getId(), is(equalTo("17")));
 			assertThat(project.getPersonId(), is(equalTo("11")));
-			assertThat(project.getCompanyId(), is(equalTo("19")));
+			assertThat(project.getHostId(), is(equalTo("19")));
 			assertThat(project.getTitle(), is(equalTo("Rad Hat")));
 			assertThat(project.getPosition(), is(equalTo("Java Programmer")));
 			assertThat(project.getYears(), is(equalTo("2006-2013")));

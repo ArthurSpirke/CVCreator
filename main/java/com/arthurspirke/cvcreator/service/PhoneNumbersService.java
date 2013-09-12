@@ -81,13 +81,7 @@ public class PhoneNumbersService implements DBService<PhoneNumbers>, FactoryServ
 
 	@Override
 	public void delete(List<PhoneNumbers> entities) throws ComponentWriteException {
-       String[] ids = new String[entities.size()];
-       int length = ids.length;
-       
-       for(int i = 0; i < length; i++){
-    	   ids[i] = entities.get(i).getId();
-       }
-       
+       String[] ids = Utils.getIdsByComponents(entities);       
        phoneNumbersDAO.delete(ids);
 	}
 

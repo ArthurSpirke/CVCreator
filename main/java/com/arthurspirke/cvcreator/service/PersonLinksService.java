@@ -82,13 +82,7 @@ public class PersonLinksService implements DBService<PersonLinks>, FactoryServic
 
 	@Override
 	public void delete(List<PersonLinks> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
+	      String[] ids = Utils.getIdsByComponents(entities);
 	      personLinksDAO.delete(ids); 
 	}
     

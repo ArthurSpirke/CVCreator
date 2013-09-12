@@ -1,7 +1,6 @@
 package com.arthurspirke.cvcreator.entity.business;
 
 import com.arthurspirke.cvcreator.entity.enums.EducationType;
-import com.arthurspirke.cvcreator.util.Utils;
 
 
 public class Education extends Component{
@@ -49,6 +48,10 @@ public class Education extends Component{
 
 	public Address getAddress() {
 		return address;
+	}
+	
+	public void setAddress(Address address){
+		this.address = address;
 	}
 
 	public String getDescription() {

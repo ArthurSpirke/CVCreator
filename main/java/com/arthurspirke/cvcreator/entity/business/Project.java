@@ -1,10 +1,9 @@
 package com.arthurspirke.cvcreator.entity.business;
 
-import com.arthurspirke.cvcreator.util.Utils;
 
 public class Project extends Component{
 	
-	private String companyId;
+	private String hostId;
 	private final String title;
 	private final String position;
 	private final String years;
@@ -20,7 +19,7 @@ public class Project extends Component{
 			String projPosition, String projYears, String projDescription,
 			String companyLink, String state) {
 		super(id, personId, state);
-		this.companyId = companyId;
+		this.hostId = companyId;
 		this.title = projTitle;
 		this.position = projPosition;
 		this.years = projYears;
@@ -28,12 +27,12 @@ public class Project extends Component{
 		this.companyLink = companyLink;
 	}
 
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setHostId(String hostyId) {
+		this.hostId = hostId;
 	}
 
-	public String getCompanyId() {
-		return companyId;
+	public String getHostId() {
+		return hostId;
 	}
 
 	public String getTitle() {
@@ -63,7 +62,7 @@ public class Project extends Component{
 		
 		boolean idCheck = id == project.id || (id != null && id.equals(project.getId()));
 		boolean personIdCheck = personId == project.personId || (personId != null && personId.equals(project.getPersonId()));
-		boolean companyIdCheck = companyId == project.companyId || (companyId != null && companyId.equals(project.getCompanyId()));
+		boolean companyIdCheck = hostId == project.hostId || (hostId != null && hostId.equals(project.getHostId()));
 		boolean titleCheck = title == project.title || (title != null && title.equals(project.getTitle()));
 		boolean positionCheck = position == project.position || (position != null && position.equals(project.getPosition()));
 		boolean yearsCheck = years == project.years || (years != null && years.equals(project.getYears()));
@@ -77,7 +76,7 @@ public class Project extends Component{
 		int hash = 17;
 		hash = hash * 31 + (id == null ? 0 : id.hashCode());
 		hash = hash * 31 + (personId == null ? 0 : personId.hashCode());
-		hash = hash * 31 + (companyId == null ? 0 : companyId.hashCode());
+		hash = hash * 31 + (hostId == null ? 0 : hostId.hashCode());
 		hash = hash * 31 + (title == null ? 0 : title.hashCode());
 		hash = hash * 31 + (position == null ? 0 : position.hashCode());
 		hash = hash * 31 + (years == null ? 0 : years.hashCode());

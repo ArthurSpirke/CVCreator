@@ -16,8 +16,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class PersonTemplatesService implements DBService<PersonalTemplates>, FactoryService<PersonalTemplates> {
 
-	MainDAO<PersonalTemplates> personalTemplatesDAO = DAOFactory
-			.getDAO(EntityType.PERSONAL_TEMPLATES);
+	MainDAO<PersonalTemplates> personalTemplatesDAO = DAOFactory.getDAO(EntityType.PERSONAL_TEMPLATES);
 
 	@Override
 	public void save(PersonalTemplates personalTemplates) throws ComponentWriteException {
@@ -75,14 +74,7 @@ public class PersonTemplatesService implements DBService<PersonalTemplates>, Fac
 
 	@Override
 	public void delete(List<PersonalTemplates> entities) throws ComponentWriteException {
-		
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
+		 String[] ids = Utils.getIdsByComponents(entities);
          personalTemplatesDAO.delete(ids);
 	}
 

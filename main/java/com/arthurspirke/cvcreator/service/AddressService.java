@@ -1,11 +1,16 @@
 package com.arthurspirke.cvcreator.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.arthurspirke.cvcreator.dblayer.AddressDAO;
 import com.arthurspirke.cvcreator.dblayer.DAOFactory;
 import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcAddressDAO;
 import com.arthurspirke.cvcreator.entity.business.Address;
+import com.arthurspirke.cvcreator.entity.business.Education;
+import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
@@ -14,8 +19,13 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class AddressService implements DBService<Address>, FactoryService<Address>{
 	
-     MainDAO<Address> addressDAO = DAOFactory.getDAO(EntityType.ADDRESS);
+	 //TODO: bad implementation
+     AddressDAO addressDAO = new JdbcAddressDAO();
   
+     
+     public Address getAddressByHost(String id)  throws ComponentAssemblyException  {
+    	 return addressDAO.getByHostId(id);
+     }
      
 	@Override
 	public Address getEntity(String id) throws ComponentAssemblyException {
@@ -77,15 +87,27 @@ public class AddressService implements DBService<Address>, FactoryService<Addres
 
 	@Override
 	public void delete(List<Address> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
+          String[] ids = Utils.getIdsByComponents(entities);
 	      addressDAO.delete(ids);
 	}
 
+	public List<Address> getAddressesFromEducations(List<Education> entities){
+        List<Address> addressListOfEdu = new ArrayList<>();
+        
+        for(Education edu : entities){
+        	addressListOfEdu.add(edu.getAddress());
+        }
+        
+        return addressListOfEdu;
+	}
 
+	public List<Address> getAddressesFromEmploymentHistory(List<EmploymentHistory> entities){
+        List<Address> addressListOfEmpHistory = new ArrayList<>();
+        
+        for(EmploymentHistory empHistory : entities){
+        	addressListOfEmpHistory.add(empHistory.getAddress());
+        }
+        
+        return addressListOfEmpHistory;
+	}
 }

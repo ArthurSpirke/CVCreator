@@ -71,7 +71,7 @@ public class EmploymentHistoryServiceTest {
 		Project empProject = empHis.getProjects().get(0);
 		
 		assertThat(empProject.getId(), is(equalTo("19")));
-		assertThat(empProject.getCompanyId(), is(equalTo("15")));
+		assertThat(empProject.getHostId(), is(equalTo("15")));
 		assertThat(empProject.getTitle(), is(equalTo("MyProject")));
 		assertThat(empProject.getPosition(), is(equalTo("Java Programmer")));
 		assertThat(empProject.getYears(), is(equalTo("2008-2013")));

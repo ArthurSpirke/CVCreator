@@ -75,13 +75,7 @@ public class PersonalInfoService implements DBService<PersonalInfo>, FactoryServ
 
 	@Override
 	public void delete(List<PersonalInfo> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
+	       String[] ids = Utils.getIdsByComponents(entities);
 	      personalInfoDAO.delete(ids);
 	}
 

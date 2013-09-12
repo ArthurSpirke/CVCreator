@@ -7,6 +7,9 @@ import java.util.Map;
 
 import com.arthurspirke.cvcreator.dblayer.DAOFactory;
 import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.ProjectDAO;
+import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcProjectDAO;
+import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
 import com.arthurspirke.cvcreator.entity.business.Project;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
@@ -15,7 +18,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class ProjectService implements DBService<Project>, FactoryService<Project> {
 	
-	MainDAO<Project> projectDAO = DAOFactory.getDAO(EntityType.PROJECT);
+	JdbcProjectDAO projectDAO = new JdbcProjectDAO();
 
 	@Override
 	public void save(List<Project> projects) throws ComponentWriteException {
@@ -86,15 +89,23 @@ public class ProjectService implements DBService<Project>, FactoryService<Projec
 
 	@Override
 	public void delete(List<Project> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
+	     String[] ids = Utils.getIdsByComponents(entities);
 	     projectDAO.delete(ids);
 	}
 	
+	
+	public List<Project> getProjectsByHostCompany(String hostCompanyId) throws ComponentAssemblyException {
+		return projectDAO.getListByHostId(hostCompanyId);
+	}
+	
+	public List<Project> getAllProjectsFromCompanies(List<EmploymentHistory> empHistoryList){
+		List<Project> projects = new ArrayList<>();
+		
+		for(EmploymentHistory empHistory : empHistoryList){
+			projects.addAll(empHistory.getProjects());
+		}
+		
+		return projects;
+	}
 	
 }

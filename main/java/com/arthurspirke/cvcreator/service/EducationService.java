@@ -7,9 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.arthurspirke.cvcreator.dblayer.AddressDAO;
 import com.arthurspirke.cvcreator.dblayer.DAOFactory;
 import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcAddressDAO;
 import com.arthurspirke.cvcreator.entity.business.Address;
+import com.arthurspirke.cvcreator.entity.business.Component;
 import com.arthurspirke.cvcreator.entity.business.Education;
 import com.arthurspirke.cvcreator.entity.enums.EducationType;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
@@ -20,25 +23,40 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class EducationService implements DBService<Education>, FactoryService<Education>{
 	MainDAO<Education> educationDAO = DAOFactory.getDAO(EntityType.EDUCATION);
+    AddressService addressService = new AddressService();
 
 	@Override
 	public Education getEntity(String id) throws ComponentAssemblyException {
-		return educationDAO.getById(id);
+		Education education = educationDAO.getById(id);
+		
+		Address address = addressService.getAddressByHost(education.getId());
+		education.setAddress(address);
+		
+		return education;
 	}
 
 	@Override
 	public List<Education> getEntitiesList(String personId) throws ComponentAssemblyException {
+		List<Education> educations = educationDAO.getListByPersonId(personId);
+		
+		for(Education education : educations){
+			Address address = addressService.getAddressByHost(education.getId());
+			education.setAddress(address);
+		}
+		
 		return educationDAO.getListByPersonId(personId);
 	}
 
 	@Override
 	public void save(Education entity) throws ComponentWriteException {
 		educationDAO.insert(entity);
+		addressService.save(entity.getAddress());
 	}
 
 	@Override
 	public void save(List<Education> entities) throws ComponentWriteException {
         educationDAO.insert(entities);
+        addressService.save(addressService.getAddressesFromEducations(entities));
 	}
 
 	@Override
@@ -70,6 +88,7 @@ public class EducationService implements DBService<Education>, FactoryService<Ed
 	    return new Education(eduId, personId, educationType, title, years, degree, address, description, state);
 	}
 	
+	//TODO: right place?
 	private Address getEduAddress(String hostId, String personId, Map<String, String> map){
 	
 		
@@ -86,29 +105,32 @@ public class EducationService implements DBService<Education>, FactoryService<Ed
 	@Override
 	public void update(Education entity) throws ComponentWriteException {
         educationDAO.update(entity);
+        addressService.update(entity.getAddress());
 	}
 
 	@Override
 	public void update(List<Education> entities) throws ComponentWriteException {
        educationDAO.update(entities);
+       addressService.update(addressService.getAddressesFromEducations(entities));
 	}
 
 	@Override
 	public void delete(Education entity) throws ComponentWriteException {
        String id = entity.getId();
+       Address address = entity.getAddress();
+       
        educationDAO.delete(id);
+       addressService.delete(address);
 	}
 
 	@Override
 	public void delete(List<Education> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
+	       String[] ids = Utils.getIdsByComponents(entities);
+	       List<Address> addresses = addressService.getAddressesFromEducations(entities);
 	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
-	      educationDAO.delete(ids); 
+	       addressService.delete(addresses);
+	       educationDAO.delete(ids);      
+	      
 	}
 	
 	

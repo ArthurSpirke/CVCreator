@@ -32,7 +32,7 @@ public class DAOFactory {
 	}
 	
 	
-	//TODO: work with cast problem. Find right solve of this problem. Thanks!
+	//TODO: work with cast problem. Find right solve of this problem
 	private static <T> MainDAO<T> getJdbcDAO(EntityType type){
 		switch(type){
 		case CERTIFICATE:

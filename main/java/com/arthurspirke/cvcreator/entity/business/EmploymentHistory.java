@@ -1,19 +1,17 @@
 package com.arthurspirke.cvcreator.entity.business;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-import com.arthurspirke.cvcreator.util.Utils;
 
 
 public class EmploymentHistory extends Component{
 
-	private final Address address;
+	private Address address;
 	private final String title;
 	private final String years;
 	private final String position;
 	private final String description;
-	//TODO: think about this idea!
 	private List<Project> projects;
 	
 	
@@ -41,6 +39,9 @@ public class EmploymentHistory extends Component{
 		return address;
 	}
 
+	public void setAddress(Address address){
+		this.address = address;
+	}
 
 	public String getTitle() {
 		return title;

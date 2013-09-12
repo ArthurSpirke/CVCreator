@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import com.arthurspirke.cvcreator.entity.business.Certificate;
+import com.arthurspirke.cvcreator.entity.business.Component;
 import com.arthurspirke.cvcreator.entity.business.Education;
 import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
 import com.arthurspirke.cvcreator.entity.business.PersonLinks;
@@ -138,6 +139,17 @@ public class Utils {
 		}
 		
 		return projects;
+	}
+	
+	
+	public static String[] getIdsByComponents(List<? extends Component> components){
+		String[] ids = new String[components.size()];
+		
+        for(int i = 0; i < components.size(); i++){
+        	ids[i] = components.get(i).getId();
+        }
+        
+        return ids;
 	}
 
 }

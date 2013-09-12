@@ -105,6 +105,7 @@ public class JsonToMapAssemblyTest {
 		assertThat(first.get("countryId"), is(equalTo("23")));
 		assertThat(first.get("regionId"), is(equalTo("53")));
 		assertThat(first.get("cityId"), is(equalTo("11")));
+		assertThat(first.get("postalCode"), is(equalTo("152362")));
 		assertThat(first.get("streetAddress"), is(equalTo("Main Street")));
 
 	}
@@ -130,7 +131,6 @@ public class JsonToMapAssemblyTest {
 		assertThat(first.get("id"), is(equalTo("0")));
 		assertThat(first.get("firstName"), is(equalTo("John")));
 		assertThat(first.get("lastName"), is(equalTo("Smith")));
-		assertThat(first.get("postalCode"), is(equalTo("152362")));
 		assertThat(first.get("eMail"), is(equalTo("john.smith1111111abc@gmail.com")));
 		assertThat(first.get("claimPosition"), is(equalTo("Java Programmer")));
 		assertThat(first.get("profile"), is(equalTo("My Profile")));

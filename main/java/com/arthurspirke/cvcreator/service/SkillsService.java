@@ -79,13 +79,7 @@ public class SkillsService implements DBService<Skills>, FactoryService<Skills> 
 
 	@Override
 	public void delete(List<Skills> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
+	      String[] ids = Utils.getIdsByComponents(entities);
 	      skillsDAO.delete(ids); 
 	}
 }

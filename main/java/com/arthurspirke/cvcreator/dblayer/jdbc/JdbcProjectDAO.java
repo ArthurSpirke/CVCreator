@@ -22,6 +22,7 @@ public class JdbcProjectDAO implements ProjectDAO{
     private final static String UPDATE_FULL_PROJECT_BY_ID = "UPDATE projects SET title= ?, years= ?, position= ?, description= ? WHERE id= ?";
 	private final static String GET_PROJECT_BY_ID = "SELECT * FROM projects WHERE id= ?";
 	private final static String GET_PROJECTS_BY_PERSON_ID = "SELECT * FROM projects WHERE person_id= ?";
+	private final static String GET_PROJECTS_BY_HOST_ID = "SELECT * FROM projects WHERE company_id= ?";
     
 
 	@Override
@@ -43,6 +44,27 @@ public class JdbcProjectDAO implements ProjectDAO{
 
 	}
 	
+	
+	public List<Project> getListByHostId(String hostId) throws ComponentAssemblyException{
+		try(Connection conn = DBConnection.getMySQLConnection(); PreparedStatement pstmt = conn.prepareStatement(GET_PROJECTS_BY_HOST_ID)){
+			
+			List<Project> projects = new ArrayList<>();
+			
+			pstmt.setString(1, hostId);
+			ResultSet rs = pstmt.getResultSet();
+			
+			while(rs.next()){
+				projects.add(new Project(rs.getString("id"), rs.getString("company_id"), rs.getString("person_id"), rs.getString("title"), rs.getString("position"), rs.getString("years"), rs.getString("description")));	
+			}
+
+			return projects;
+			
+		} catch(SQLException ex){
+			
+			throw new ComponentAssemblyException();
+			
+		}
+	}
 
 	@Override
 	public List<Project> getListByPersonId(String personId) throws ComponentAssemblyException{
@@ -75,7 +97,7 @@ public class JdbcProjectDAO implements ProjectDAO{
 			
 			    pstmt.setString(1, entity.getId());
 				pstmt.setString(2, entity.getPersonId());
-				pstmt.setString(3, entity.getCompanyId());
+				pstmt.setString(3, entity.getHostId());
 				pstmt.setString(4, entity.getTitle());
 				pstmt.setString(5, entity.getYears());
 				pstmt.setString(6, entity.getPosition());
@@ -96,7 +118,7 @@ public class JdbcProjectDAO implements ProjectDAO{
 				
 				pstmt.setString(1, proj.getId());
 				pstmt.setString(2, proj.getPersonId());
-				pstmt.setString(3, proj.getCompanyId());
+				pstmt.setString(3, proj.getHostId());
 				pstmt.setString(4, proj.getTitle());
 				pstmt.setString(5, proj.getYears());
 				pstmt.setString(6, proj.getPosition());

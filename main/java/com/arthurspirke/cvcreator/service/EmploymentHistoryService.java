@@ -22,50 +22,48 @@ public class EmploymentHistoryService implements DBService<EmploymentHistory>, F
 	
 	MainDAO<EmploymentHistory> employmentHistoryDAO = DAOFactory.getDAO(EntityType.EMPLOYMENT_HISTORY);
 	ProjectService projectService = new ProjectService();
+	AddressService addressService = new AddressService();
 
 	@Override
 	public void save(List<EmploymentHistory> employmentHistory) throws ComponentWriteException {
+		
+		List<Project> projectList = projectService.getAllProjectsFromCompanies(employmentHistory);
+		List<Address> addressList = addressService.getAddressesFromEmploymentHistory(employmentHistory);
+		
 		employmentHistoryDAO.insert(employmentHistory);
-
-		List<Project> projectList = new ArrayList<>();
-
-		for (EmploymentHistory emp : employmentHistory) {
-			projectList.addAll(emp.getProjects());
-		}
-
 		projectService.save(projectList);
+		addressService.save(addressList);
 	}
 
-	@Override
-	public EmploymentHistory getEntity(String id)
-			throws ComponentAssemblyException {
-		EmploymentHistory employmentHistory = employmentHistoryDAO.getById(id);
-		List<Project> projectList = projectService.getEntitiesList(employmentHistory.getPersonId());
 
-		for (Project proj : projectList) {
-			if (employmentHistory.getId() == proj.getCompanyId()) {
-				employmentHistory.getProjects().add(proj);
-			}
-		}
+	@Override
+	public EmploymentHistory getEntity(String id) throws ComponentAssemblyException {
+		EmploymentHistory employmentHistory = employmentHistoryDAO.getById(id);
+		String hostId = employmentHistory.getId();
+		
+		List<Project> projects = projectService.getProjectsByHostCompany(hostId);
+        Address address = addressService.getAddressByHost(hostId);
+		
+		employmentHistory.setProjects(projects);
+		employmentHistory.setAddress(address);
 
 		return employmentHistory;
 	}
 
 	@Override
-	public List<EmploymentHistory> getEntitiesList(String personId)
-			throws ComponentAssemblyException {
-		List<EmploymentHistory> empHistoryList = employmentHistoryDAO
-				.getListByPersonId(personId);
-		List<Project> projectList = projectService.getEntitiesList(personId);
+	public List<EmploymentHistory> getEntitiesList(String personId) throws ComponentAssemblyException {
+		List<EmploymentHistory> empHistoryList = employmentHistoryDAO.getListByPersonId(personId);
 
-		for (EmploymentHistory emp : empHistoryList) {
-			for (Project proj : projectList) {
-				if (emp.getId() == proj.getCompanyId()) {
-					emp.getProjects().add(proj);
-				}
-			}
+		for(EmploymentHistory empHistory : empHistoryList){
+			String hostId = empHistory.getId();
+			
+			List<Project> projects = projectService.getProjectsByHostCompany(hostId);
+			Address address = addressService.getAddressByHost(hostId);
+			
+			empHistory.setAddress(address);
+			empHistory.setProjects(projects);
 		}
-
+		
 		return empHistoryList;
 	}
 
@@ -73,6 +71,7 @@ public class EmploymentHistoryService implements DBService<EmploymentHistory>, F
 	public void save(EmploymentHistory entity) throws ComponentWriteException {
 		employmentHistoryDAO.insert(entity);
 		projectService.save(entity.getProjects());
+		addressService.save(entity.getAddress());
 	}
 
 	@Override
@@ -141,29 +140,45 @@ public class EmploymentHistoryService implements DBService<EmploymentHistory>, F
 	@Override
 	public void update(EmploymentHistory entity) throws ComponentWriteException {
          employmentHistoryDAO.update(entity);
+         addressService.update(entity.getAddress());
+         projectService.update(entity.getProjects());
 	}
 
 	@Override
 	public void update(List<EmploymentHistory> entities) throws ComponentWriteException {
+		
+		List<Address> addressList = addressService.getAddressesFromEmploymentHistory(entities);
+		List<Project> projects = projectService.getAllProjectsFromCompanies(entities);
+		
+		addressService.update(addressList);
+		projectService.update(projects);
+		
 		employmentHistoryDAO.update(entities);
 	}
 
 	@Override
 	public void delete(EmploymentHistory entity) throws ComponentWriteException {
 		String id = entity.getId();
+		
+		Address address = entity.getAddress();
+		List<Project> projects = entity.getProjects();
+		
+		addressService.delete(address);
+		projectService.delete(projects);
+		
 		employmentHistoryDAO.delete(id);
+		
 	}
 
 	@Override
 	public void delete(List<EmploymentHistory> entities) throws ComponentWriteException {
-	       String[] ids = new String[entities.size()];
-	       int length = ids.length;
-	       
-	       for(int i = 0; i < length; i++){
-	    	   ids[i] = entities.get(i).getId();
-	       }
-	       
-	       employmentHistoryDAO.delete(ids);
+           
+		   List<Address> addresses = addressService.getAddressesFromEmploymentHistory(entities);
+		   List<Project> projects = projectService.getAllProjectsFromCompanies(entities);
+		
+		   addressService.delete(addresses);
+		   projectService.delete(projects);
+	       employmentHistoryDAO.delete(Utils.getIdsByComponents(entities));
 		
 	}
 }
