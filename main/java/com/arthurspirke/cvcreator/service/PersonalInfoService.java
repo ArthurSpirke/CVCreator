@@ -3,8 +3,8 @@ package com.arthurspirke.cvcreator.service;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PersonalInfoDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.PersonalInfo;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
@@ -13,7 +13,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class PersonalInfoService implements DBService<PersonalInfo>, FactoryService<PersonalInfo>{
 
-     MainDAO<PersonalInfo> personalInfoDAO = DAOFactory.getDAO(EntityType.PERSONAL_INFO);
+     PersonalInfoDAO personalInfoDAO = DAOFactoryProducer.getFactory(EntityType.PERSONAL_INFO).getPersonalInfoDAO();
      
      @Override
      public void save(PersonalInfo personalInfo) throws ComponentWriteException {

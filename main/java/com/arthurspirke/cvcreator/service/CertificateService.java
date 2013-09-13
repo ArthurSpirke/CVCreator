@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.CertificateDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.Certificate;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.enums.ImageSize;
@@ -14,7 +14,8 @@ import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;
 import com.arthurspirke.cvcreator.util.Utils;
 
 public class CertificateService implements DBService<Certificate>, FactoryService<Certificate>{
-	MainDAO<Certificate> certificateDAO = DAOFactory.getDAO(EntityType.CERTIFICATE);
+	
+	CertificateDAO certificateDAO = DAOFactoryProducer.getFactory(EntityType.CERTIFICATE).getCertificateDAO();
 
 	@Override
 	public Certificate getEntity(String id) throws ComponentAssemblyException {

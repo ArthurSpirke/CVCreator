@@ -11,12 +11,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arthurspirke.cvcreator.dblayer.PlacesDAO;
 import com.arthurspirke.cvcreator.dblayer.core.SelectDBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.RegionDAO;
 import com.arthurspirke.cvcreator.entity.support.Places;
 import com.arthurspirke.cvcreator.entity.support.Region;
 
-public class JdbcRegionDAO implements PlacesDAO{
+public class JdbcRegionDAO implements RegionDAO{
 	
   private static final String GET_REGION_LIST_BY_COUNTRY_ID = "SELECT * FROM region_ WHERE id_country= ?";
   private static final String GET_REGION_BY_ID = "SELECT * FROM region_ WHERE id= ?";

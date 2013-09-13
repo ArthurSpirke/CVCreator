@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PhoneNumbersDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.PhoneNumbers;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.enums.PhoneIcon;
@@ -14,7 +14,8 @@ import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;
 import com.arthurspirke.cvcreator.util.Utils;
 
 public class PhoneNumbersService implements DBService<PhoneNumbers>, FactoryService<PhoneNumbers>{
-	MainDAO<PhoneNumbers> phoneNumbersDAO = DAOFactory.getDAO(EntityType.PHONE_NUMBERS);
+	
+	PhoneNumbersDAO phoneNumbersDAO = DAOFactoryProducer.getFactory(EntityType.PHONE_NUMBERS).getPhoneNumbersDAO();
 
 
 	@Override

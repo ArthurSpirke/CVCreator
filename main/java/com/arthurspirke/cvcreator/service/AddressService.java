@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.AddressDAO;
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
-import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcAddressDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.AddressDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.Address;
 import com.arthurspirke.cvcreator.entity.business.Education;
 import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
@@ -19,8 +17,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class AddressService implements DBService<Address>, FactoryService<Address>{
 	
-	 //TODO: bad implementation
-     AddressDAO addressDAO = new JdbcAddressDAO();
+     AddressDAO addressDAO = DAOFactoryProducer.getFactory(EntityType.ADDRESS).getAddressDAO();
   
      
      public Address getAddressByHost(String id)  throws ComponentAssemblyException  {

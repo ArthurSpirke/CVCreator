@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 
 import static com.arthurspirke.cvcreator.service.DBServiceFactory.*;
 import static com.arthurspirke.cvcreator.service.FactoryServiceFactory.*;
-import static com.arthurspirke.cvcreator.dblayer.DAOFactory.*;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PersonalDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.Address;
 import com.arthurspirke.cvcreator.entity.business.Certificate;
 import com.arthurspirke.cvcreator.entity.business.Education;
@@ -27,7 +27,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class PersonResumeService{
 	private Logger log = Logger.getLogger(PersonResumeService.class);
-	private MainDAO<Person> personDAO = getDAO(EntityType.PERSON);
+	private PersonalDAO personDAO = DAOFactoryProducer.getFactory(EntityType.PERSON).getPersonDAO();
       
 	private DBService<Address> addressDBService = getDBService(EntityType.ADDRESS);
 	private DBService<PersonalInfo> personalInfoDBService = getDBService(EntityType.PERSONAL_INFO);

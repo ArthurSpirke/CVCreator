@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arthurspirke.cvcreator.dblayer.ProjectDAO;
 import com.arthurspirke.cvcreator.dblayer.core.DBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.ProjectDAO;
 import com.arthurspirke.cvcreator.entity.business.Project;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
 import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;

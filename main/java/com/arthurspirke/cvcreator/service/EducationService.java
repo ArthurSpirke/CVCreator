@@ -3,16 +3,12 @@ package com.arthurspirke.cvcreator.service;
 import static com.arthurspirke.cvcreator.util.Utils.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.AddressDAO;
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
-import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcAddressDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.EducationDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.Address;
-import com.arthurspirke.cvcreator.entity.business.Component;
 import com.arthurspirke.cvcreator.entity.business.Education;
 import com.arthurspirke.cvcreator.entity.enums.EducationType;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
@@ -22,7 +18,8 @@ import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;
 import com.arthurspirke.cvcreator.util.Utils;
 
 public class EducationService implements DBService<Education>, FactoryService<Education>{
-	MainDAO<Education> educationDAO = DAOFactory.getDAO(EntityType.EDUCATION);
+	
+	EducationDAO educationDAO = DAOFactoryProducer.getFactory(EntityType.EDUCATION).getEducationDAO();
     AddressService addressService = new AddressService();
 
 	@Override

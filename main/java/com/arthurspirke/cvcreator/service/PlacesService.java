@@ -1,25 +1,21 @@
 package com.arthurspirke.cvcreator.service;
 
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.arthurspirke.cvcreator.dblayer.PlacesDAO;
-import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcCityDAO;
-import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcCountryDAO;
-import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcRegionDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.CityDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.CountryDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.RegionDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
+import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.entity.support.Places;
 
 public final class PlacesService {
-    private final PlacesDAO countryDAO = new JdbcCountryDAO();
-    private final PlacesDAO regionDAO = new JdbcRegionDAO();
-    private final PlacesDAO cityDAO = new JdbcCityDAO();
+    private final CountryDAO countryDAO = DAOFactoryProducer.getFactory(EntityType.COUNTRY).getCountryDAO();
+    private final RegionDAO regionDAO = DAOFactoryProducer.getFactory(EntityType.REGION).getRegionDAO();
+    private final CityDAO cityDAO = DAOFactoryProducer.getFactory(EntityType.CITY).getCityDAO();
     private final Language language;
     
     public PlacesService(Language language){
@@ -94,18 +90,15 @@ public final class PlacesService {
 		
 		if("country".equals(placeType)){
 			
-			PlacesDAO placesDAO = new JdbcCountryDAO();
-            place = placesDAO.getById(placeId);
+            place = countryDAO.getById(placeId);
 			
 		} else if("region".equals(placeType)){
 			
-			PlacesDAO placesDAO = new JdbcRegionDAO();
-			place = placesDAO.getById(placeId);
+			place = regionDAO.getById(placeId);
 			
 		} else if("city".equals(placeType)){
 			
-			PlacesDAO placesDAO = new JdbcCityDAO(); 
-			place = placesDAO.getById(placeId);
+			place = cityDAO.getById(placeId);
 			
 		} else {
 			throw new IllegalArgumentException();

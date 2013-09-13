@@ -3,20 +3,17 @@ package com.arthurspirke.cvcreator.service;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PersonalTemplatesDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.PersonalTemplates;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
-import com.arthurspirke.cvcreator.entity.enums.TemplateDOC;
-import com.arthurspirke.cvcreator.entity.enums.TemplateHTML;
-import com.arthurspirke.cvcreator.entity.enums.TemplatePDF;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
 import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;
 import com.arthurspirke.cvcreator.util.Utils;
 
 public class PersonTemplatesService implements DBService<PersonalTemplates>, FactoryService<PersonalTemplates> {
 
-	MainDAO<PersonalTemplates> personalTemplatesDAO = DAOFactory.getDAO(EntityType.PERSONAL_TEMPLATES);
+	PersonalTemplatesDAO personalTemplatesDAO = DAOFactoryProducer.getFactory(EntityType.PERSONAL_TEMPLATES).getPersonalTemplatesDAO();
 
 	@Override
 	public void save(PersonalTemplates personalTemplates) throws ComponentWriteException {

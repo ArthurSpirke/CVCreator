@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arthurspirke.cvcreator.dblayer.PersonalDAO;
 import com.arthurspirke.cvcreator.dblayer.core.DBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PersonalDAO;
 import com.arthurspirke.cvcreator.entity.business.Person;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
 import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;

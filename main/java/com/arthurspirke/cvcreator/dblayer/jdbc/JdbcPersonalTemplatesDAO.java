@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.arthurspirke.cvcreator.dblayer.PersonalTemplatesDAO;
 import com.arthurspirke.cvcreator.dblayer.core.DBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PersonalTemplatesDAO;
 import com.arthurspirke.cvcreator.entity.business.PersonalTemplates;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
 import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;

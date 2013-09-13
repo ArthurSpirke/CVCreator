@@ -10,12 +10,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arthurspirke.cvcreator.dblayer.PlacesDAO;
 import com.arthurspirke.cvcreator.dblayer.core.SelectDBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.CountryDAO;
 import com.arthurspirke.cvcreator.entity.support.Country;
 import com.arthurspirke.cvcreator.entity.support.Places;
 
-public class JdbcCountryDAO implements PlacesDAO{
+public class JdbcCountryDAO implements CountryDAO{
   private static final String GET_COUNTRY_BY_ID = "SELECT * FROM country_ WHERE country_.id= ?";
   private static final String GET_ALL_COUNTRIES="SELECT * FROM selectBase.country_";
   Logger log = Logger.getLogger(JdbcCountryDAO.class);
@@ -41,11 +41,6 @@ public Country getById(int id) {
 		 return country;
 	  }
 
-}
-
-@Override
-public List<Places> getListByMainPlaceId(int mainPlaceId) {
-     throw new UnsupportedOperationException();
 }
 
 @Override

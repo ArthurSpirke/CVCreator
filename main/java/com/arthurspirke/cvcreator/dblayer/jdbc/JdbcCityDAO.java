@@ -10,12 +10,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arthurspirke.cvcreator.dblayer.PlacesDAO;
 import com.arthurspirke.cvcreator.dblayer.core.SelectDBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.CityDAO;
 import com.arthurspirke.cvcreator.entity.support.City;
 import com.arthurspirke.cvcreator.entity.support.Places;
 
-public class JdbcCityDAO implements PlacesDAO{
+public class JdbcCityDAO implements CityDAO{
    private static final String GET_CITY_LIST_BY_REGION_ID = "SELECT * FROM city_ WHERE id_region= ?";
    private static final String GET_CITY_BY_ID = "SELECT * FROM city_ WHERE city_.id= ?";
    private static final String GET_ALL_CITIES = "SELECT * FROM city_";

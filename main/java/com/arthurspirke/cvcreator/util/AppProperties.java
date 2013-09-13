@@ -67,6 +67,8 @@ public class AppProperties {
 	}
 
 	
-	
+	public static String getStorageType(){
+		return res.getString("storage_type");
+	}
 
 }

@@ -1,14 +1,11 @@
 package com.arthurspirke.cvcreator.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
-import com.arthurspirke.cvcreator.dblayer.ProjectDAO;
-import com.arthurspirke.cvcreator.dblayer.jdbc.JdbcProjectDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.ProjectDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
 import com.arthurspirke.cvcreator.entity.business.Project;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
@@ -18,7 +15,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class ProjectService implements DBService<Project>, FactoryService<Project> {
 	
-	JdbcProjectDAO projectDAO = new JdbcProjectDAO();
+	ProjectDAO projectDAO = DAOFactoryProducer.getFactory(EntityType.PROJECT).getProjectDAO();
 
 	@Override
 	public void save(List<Project> projects) throws ComponentWriteException {

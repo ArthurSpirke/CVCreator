@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.EmploymentHistoryDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.Address;
 import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
 import com.arthurspirke.cvcreator.entity.business.Project;
@@ -20,7 +20,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class EmploymentHistoryService implements DBService<EmploymentHistory>, FactoryService<EmploymentHistory> {
 	
-	MainDAO<EmploymentHistory> employmentHistoryDAO = DAOFactory.getDAO(EntityType.EMPLOYMENT_HISTORY);
+	EmploymentHistoryDAO employmentHistoryDAO = DAOFactoryProducer.getFactory(EntityType.EMPLOYMENT_HISTORY).getEmploymentHistoryDAO();
 	ProjectService projectService = new ProjectService();
 	AddressService addressService = new AddressService();
 

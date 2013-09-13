@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.arthurspirke.cvcreator.dblayer.AddressDAO;
 import com.arthurspirke.cvcreator.dblayer.core.DBConnection;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.AddressDAO;
 import com.arthurspirke.cvcreator.entity.business.Address;
 import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;

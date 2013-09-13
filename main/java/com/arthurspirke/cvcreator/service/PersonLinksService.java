@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.PersonLinksDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.PersonLinks;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.enums.LinkIcon;
@@ -15,7 +15,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class PersonLinksService implements DBService<PersonLinks>, FactoryService<PersonLinks>{
 	
-    MainDAO<PersonLinks> personLinksDAO = DAOFactory.getDAO(EntityType.PERSONAL_LINKS);
+    PersonLinksDAO personLinksDAO = DAOFactoryProducer.getFactory(EntityType.PERSONAL_LINKS).getPersonalLinksDAO();
     
 
     @Override

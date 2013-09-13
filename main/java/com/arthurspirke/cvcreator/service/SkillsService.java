@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.arthurspirke.cvcreator.dblayer.DAOFactory;
-import com.arthurspirke.cvcreator.dblayer.MainDAO;
+import com.arthurspirke.cvcreator.dblayer.daointerfaces.SkillsDAO;
+import com.arthurspirke.cvcreator.dblayer.factories.DAOFactoryProducer;
 import com.arthurspirke.cvcreator.entity.business.Skills;
 import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
@@ -14,7 +14,7 @@ import com.arthurspirke.cvcreator.util.Utils;
 
 public class SkillsService implements DBService<Skills>, FactoryService<Skills> {
 	
-	MainDAO<Skills> skillsDAO = DAOFactory.getDAO(EntityType.SKILLS);
+	SkillsDAO skillsDAO = DAOFactoryProducer.getFactory(EntityType.SKILLS).getSkillsDAO();
 
 	@Override
 	public void save(List<Skills> skills) throws ComponentWriteException {
