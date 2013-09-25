@@ -9,8 +9,6 @@ import static com.arthurspirke.cvcreator.util.AppProperties.getPersonTemplatesKe
 import static com.arthurspirke.cvcreator.util.AppProperties.getPersonalInfoKeys;
 import static com.arthurspirke.cvcreator.util.AppProperties.getPhoneNumbersKeys;
 import static com.arthurspirke.cvcreator.util.AppProperties.getSkillsKeys;
-import static com.arthurspirke.cvcreator.util.JSONUtil.getMapInfo;
-import static com.arthurspirke.cvcreator.util.JSONUtil.getMapOnListInfo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +32,6 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 import com.arthurspirke.cvcreator.util.AppProperties;
-import com.arthurspirke.cvcreator.util.JSONUtil;
 
 public class JsonToMapAssemblyTest {
 

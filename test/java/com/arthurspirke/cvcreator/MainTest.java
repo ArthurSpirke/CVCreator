@@ -1,8 +1,6 @@
 package com.arthurspirke.cvcreator;
 
 import static com.arthurspirke.cvcreator.util.AppProperties.*;
-import static com.arthurspirke.cvcreator.util.JSONUtil.getMapInfo;
-import static com.arthurspirke.cvcreator.util.JSONUtil.getMapOnListInfo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,7 +29,6 @@ import static org.junit.Assert.assertThat;
 import com.arthurspirke.cvcreator.entity.business.Person;
 import com.arthurspirke.cvcreator.service.PersonResumeService;
 import com.arthurspirke.cvcreator.util.AppProperties;
-import com.arthurspirke.cvcreator.util.JSONUtil;
 
 public class MainTest {
 	/*private final static File FILE_WITH_JSON = new File("C:/Users/Arthur/Downloads/testJson.txt");

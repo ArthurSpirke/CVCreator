@@ -1,11 +1,11 @@
 package com.arthurspirke.cvcreator.service;
 
-import static com.arthurspirke.cvcreator.util.ImageUtils.getUniqueImageId;
-
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,19 +16,18 @@ import javax.servlet.http.Part;
 
 import com.arthurspirke.cvcreator.util.AppProperties;
 import com.arthurspirke.cvcreator.util.Utils;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Image;
 
 public class ImageUploader {
 	private final Collection<Part> parts;
-	private final int imageId;
+	private final String imageId;
 	
 	public ImageUploader(Collection<Part> parts){
 		this.parts = parts;
-		this.imageId = getUniqueImageId();
+		this.imageId = Utils.getUniqueId();
 	}
-	
-	
-	
-	
+
 	public Map<String, List<String>> uploadImages(){
 		
 		List<String> good = new ArrayList<>();
@@ -50,8 +49,6 @@ public class ImageUploader {
 		returnMap.put("badImages", bad);
 		return returnMap;
 	}
-	
-	
 	
 	
 	public String uploadAndGetPath(Part part, String path) {

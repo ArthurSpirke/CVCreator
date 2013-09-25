@@ -8,8 +8,6 @@ import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class JSONParse {
 
@@ -20,7 +18,7 @@ public class JSONParse {
 			
 			JSONObject obj = (JSONObject) array.get(i);
 			Map<String, String> map = new HashMap<>();
-			//TODO: bad implementation
+
 			for(String key : keyList){
 				map.put(key, (String) obj.get(key));
 			}
@@ -35,14 +33,14 @@ public class JSONParse {
 	
 	
 	public static Map<String, String> getMapFromJsonString(String notParseJsonString){
-        JSONObject jsonObject = parseJsonFromString(notParseJsonString);
+        JSONObject jsonObject = JSONGenerator.getJsonObject(notParseJsonString);
         return getMapFromJson(jsonObject);
 	}
 	
 	
 	public static List<Map<String, String>> getListMapFromJsonString(String notParseJsonString){
 		
-		JSONArray jsonArray = parseJsonArrayFromString(notParseJsonString);
+		JSONArray jsonArray = JSONGenerator.getJsonArray(notParseJsonString);
 		int sizeOfArray = jsonArray.size();
 		
 		List<Map<String, String>> returnList = new ArrayList<>(sizeOfArray);
@@ -57,10 +55,37 @@ public class JSONParse {
 		return returnList;
 	}
 	
+	public static List<Map<String, String>> getListMapFromJson(Object jsonObject){
+		JSONArray obj = (JSONArray) jsonObject;
+        return getListMapFromJsonString(obj.toJSONString());
+	}
 	
 	
-	private static Map<String, String> getMapFromJson(JSONObject obj){
+	public static List<Map<String, String>> getListMapForEmpHistory(Object obj){
+		JSONArray array = (JSONArray) obj;
+		List<Map<String, String>> returnListMap = new ArrayList<>();
 		
+		for(int i = 0; i < array.size(); i++){
+			JSONObject object = (JSONObject) array.get(i);
+			String mainEmpInfo = ((JSONObject)object.get("empMainInfo")).toJSONString();
+		    String empAddress = ((JSONObject)object.get("empAddress")).toJSONString();
+		    String projects = ((JSONArray)object.get("projects")).toJSONString();
+		    
+		    Map<String, String> tempMap = new HashMap<>();
+		    
+		    tempMap.put("empMainInfo", mainEmpInfo);
+		    tempMap.put("empAddress", empAddress);
+		    tempMap.put("projects", projects);
+		    
+		    returnListMap.add(tempMap);
+		}
+
+		return returnListMap;
+	}
+	
+	
+	public static Map<String, String> getMapFromJson(Object object){
+		JSONObject obj = (JSONObject) object;
 		Set<String> keySet = obj.keySet();
 
 		Map<String, String> returnMap = new HashMap<>();
@@ -72,34 +97,15 @@ public class JSONParse {
 		return returnMap;
 	}
 	
-	private static JSONObject parseJsonFromString(String notParseJsonString){
-		JSONParser parser = new JSONParser();
+	public static List<String> getStringList(Object obj){
+		List<String> result = new ArrayList<>();
+		JSONArray array = (JSONArray) obj;
 		
-		try {
-			
-			JSONObject jsonObject = (JSONObject) parser.parse(notParseJsonString);
-			return jsonObject;
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
+		for(int i = 0; i < array.size(); i++){
+			result.add((String) array.get(i));
 		}
-		
+		return result;
 	}
-	
-	private static JSONArray parseJsonArrayFromString(String notParseJsonString){
-		JSONParser parser = new JSONParser();
-		
-		try {
-			
-			JSONArray jsonObject = (JSONArray) parser.parse(notParseJsonString);
-			return jsonObject;
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
+
 	
 }

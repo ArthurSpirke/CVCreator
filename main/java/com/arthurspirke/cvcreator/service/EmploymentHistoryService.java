@@ -15,7 +15,6 @@ import com.arthurspirke.cvcreator.entity.enums.EntityType;
 import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.entity.exception.ComponentAssemblyException;
 import com.arthurspirke.cvcreator.entity.exception.ComponentWriteException;
-import com.arthurspirke.cvcreator.util.JSONUtil;
 import com.arthurspirke.cvcreator.util.Utils;
 
 public class EmploymentHistoryService implements DBService<EmploymentHistory>, FactoryService<EmploymentHistory> {
@@ -119,7 +118,7 @@ public class EmploymentHistoryService implements DBService<EmploymentHistory>, F
 	}
 	
 	private List<Project> getProjectsForCompany(int projectsCount, String companyId, String personId, List<Map<String, String>> projectInfo){
-		 List<Map<String, String>> modifyProjectsWithCompanyId = JSONUtil.modifyProjectMapInfo(projectInfo, companyId);
+		 List<Map<String, String>> modifyProjectsWithCompanyId = Utils.modifyProjectMapInfo(projectInfo, companyId);
 		 
 		 List<Project> projects = projectService.getEntitiesList(projectsCount, personId, modifyProjectsWithCompanyId);
 		 

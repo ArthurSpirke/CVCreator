@@ -15,7 +15,6 @@ import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.service.JSONGenerator;
 import com.arthurspirke.cvcreator.service.JSONParse;
 import com.arthurspirke.cvcreator.util.AppProperties;
-import com.arthurspirke.cvcreator.util.JSONUtil;
 import com.arthurspirke.cvcreator.util.ServletUtils;
 
 
@@ -23,7 +22,7 @@ public class OptionsLangChangesController extends HttpServlet {
  private Logger log = Logger.getLogger(OptionsLangChangesController.class);
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				
-		 JSONObject mainJsonObject = JSONUtil.getJSONObject(request.getReader());
+		 JSONObject mainJsonObject = JSONGenerator.getJsonObject(request.getReader());
          JSONArray requestJsonArray = (JSONArray) mainJsonObject.get("list");
          Language lang  = Language.getLanguage((String) mainJsonObject.get("lang"));
          

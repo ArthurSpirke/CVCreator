@@ -2,26 +2,23 @@ package com.arthurspirke.cvcreator.util;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.regex.Pattern;
+
+
 
 
 import org.apache.log4j.Logger;
 
 import com.arthurspirke.cvcreator.entity.business.Certificate;
 import com.arthurspirke.cvcreator.entity.business.Component;
-import com.arthurspirke.cvcreator.entity.business.Education;
 import com.arthurspirke.cvcreator.entity.business.EmploymentHistory;
-import com.arthurspirke.cvcreator.entity.business.PersonLinks;
-import com.arthurspirke.cvcreator.entity.business.PhoneNumbers;
 import com.arthurspirke.cvcreator.entity.business.Project;
-import com.arthurspirke.cvcreator.entity.business.Skills;
 import com.arthurspirke.cvcreator.entity.enums.Language;
-import com.arthurspirke.cvcreator.entity.support.Places;
 import com.arthurspirke.cvcreator.service.support.EncodedControl;
 
 public class Utils {
@@ -40,19 +37,6 @@ public class Utils {
 			return id;
 		}
 	}
-
-	public static String[] getArrayOfFutureFiles(int personId) {
-		String path = AppProperties.getPathToSaveFinalDocs();
-		String[] returnArray = new String[3];
-
-		returnArray[0] = path + personId + "/" + personId + ".pdf";
-		returnArray[1] = path + personId + "/" + personId + ".doc";
-		returnArray[2] = path + personId + "/" + personId + ".html";
-
-		return returnArray;
-	}
-
-
 
 	public static String getCutPath(String fullPath) {
 		String c = AppProperties.getCuttingPath();
@@ -74,18 +58,6 @@ public class Utils {
     
 	}
 
-
-	public static List<Project> listOfAllProjectsByAllEmploymentHistory(List<EmploymentHistory> employmentList){
-		List<Project> returnList = new ArrayList<>();
-		
-		for(int i = 0; i < employmentList.size(); i++){
-			for(int j = 0; j < employmentList.get(i).getProjects().size(); j++){
-				returnList.add(employmentList.get(i).getProjects().get(j));
-			}
-		}
-		return returnList;
-	}
-	
 	
 	public static int getInteger(String dataFromFilter){
 		if("".equals(dataFromFilter)) return 0;
@@ -152,4 +124,25 @@ public class Utils {
         return ids;
 	}
 
+
+	public static List<Map<String, String>> modifyProjectMapInfo(List<Map<String, String>> oldProjectsInfo, String companyId){
+		
+		for(Map<String, String> map : oldProjectsInfo){
+			map.put("companyId", companyId);
+		}
+		
+      	return oldProjectsInfo;
+	}
+	
+	public static List<String> getPathToDownloadImages(
+			List<Certificate> certificate) {
+		List<String> pathToImages = new ArrayList<>();
+		for (Certificate cert : certificate) {
+			log.debug("PathToImages - " + cert.getImages().getUrl().getPath());
+			pathToImages.add(cert.getImages().getUrl().getPath());
+		}
+
+		return pathToImages;
+	}
+	
 }

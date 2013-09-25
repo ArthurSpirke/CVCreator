@@ -1,17 +1,5 @@
 package com.arthurspirke.cvcreator.pdf;
 
-import static com.arthurspirke.cvcreator.util.AppProperties.getAddressKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getCertificateKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getEducationKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getPersonKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getPersonLinksKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getPersonTemplatesKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getPersonalInfoKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getPhoneNumbersKeys;
-import static com.arthurspirke.cvcreator.util.AppProperties.getSkillsKeys;
-import static com.arthurspirke.cvcreator.util.JSONUtil.getMapInfo;
-import static com.arthurspirke.cvcreator.util.JSONUtil.getMapOnListInfo;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,9 +16,10 @@ import org.junit.Test;
 
 import com.arthurspirke.cvcreator.entity.business.Person;
 import com.arthurspirke.cvcreator.entity.enums.OperationType;
+import static com.arthurspirke.cvcreator.service.JSONGenerator.*;
+import static com.arthurspirke.cvcreator.service.JSONParse.*;
 import com.arthurspirke.cvcreator.service.PersonResumeService;
 import com.arthurspirke.cvcreator.service.generators.ResumeGenerator;
-import com.arthurspirke.cvcreator.util.JSONUtil;
 
 public class CreateResumeTest {
     private static Person person = null;
@@ -56,20 +45,20 @@ public class CreateResumeTest {
 		}
 		
 		
-        JSONObject jsonObject = JSONUtil.getJSONObject(json);
+        JSONObject jsonObject = getJsonObject(json);
 		
   		Map<String, List<Map<String, String>>> additionInfo = new HashMap<>();
-  		Map<String, String> personInfo = getMapInfo(jsonObject.get("person"), getPersonKeys());
+  		Map<String, String> personInfo = getMapFromJson(jsonObject.get("person"));
   		
-  		additionInfo.put("address", getMapOnListInfo(jsonObject.get("address"), getAddressKeys()));
-  		additionInfo.put("personalInfo", getMapOnListInfo(jsonObject.get("personalInfo"), getPersonalInfoKeys()));
-  		additionInfo.put("personalTemplates", getMapOnListInfo(jsonObject.get("personalTemplates"), getPersonTemplatesKeys()));
-  		additionInfo.put("phoneNumbers", getMapOnListInfo(jsonObject.get("phoneNumbers"), getPhoneNumbersKeys()));
-  		additionInfo.put("personLinks", getMapOnListInfo(jsonObject.get("personLinks"), getPersonLinksKeys()));
-  		additionInfo.put("skills", getMapOnListInfo(jsonObject.get("skills"), getSkillsKeys()));
-        additionInfo.put("education", getMapOnListInfo(jsonObject.get("education"), getEducationKeys()));
-        additionInfo.put("employmentHistory", JSONUtil.special(jsonObject.get("employmentHistory")));
-        additionInfo.put("certificate", getMapOnListInfo(jsonObject.get("certificate"), getCertificateKeys()));
+  		additionInfo.put("address", getListMapFromJson(jsonObject.get("address")));
+  		additionInfo.put("personalInfo", getListMapFromJson(jsonObject.get("personalInfo")));
+  		additionInfo.put("personalTemplates", getListMapFromJson(jsonObject.get("personalTemplates")));
+  		additionInfo.put("phoneNumbers", getListMapFromJson(jsonObject.get("phoneNumbers")));
+  		additionInfo.put("personLinks", getListMapFromJson(jsonObject.get("personLinks")));
+  		additionInfo.put("skills", getListMapFromJson(jsonObject.get("skills")));
+        additionInfo.put("education", getListMapFromJson(jsonObject.get("education")));
+        additionInfo.put("employmentHistory", getListMapForEmpHistory(jsonObject.get("employmentHistory")));
+        additionInfo.put("certificate", getListMapFromJson(jsonObject.get("certificate")));
 
         PersonResumeService service = new PersonResumeService();
         person = service.newPerson(personInfo, additionInfo);

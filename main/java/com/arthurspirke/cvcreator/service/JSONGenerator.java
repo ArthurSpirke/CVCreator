@@ -1,19 +1,71 @@
 package com.arthurspirke.cvcreator.service;
 
+import java.io.BufferedReader;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.arthurspirke.cvcreator.entity.enums.Language;
 import com.arthurspirke.cvcreator.util.Utils;
 
 public class JSONGenerator {
+	private static Logger log = Logger.getLogger(JSONGenerator.class);
 	
 	
+	public static JSONObject getJsonObject(BufferedReader bf) {
+		String line = "";
+		JSONParser parser = new JSONParser();
+		JSONObject o = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			while ((line = bf.readLine()) != null) {
+				sb.append(line);
+			}
+			log.debug("JSON - " + sb.toString());
+			o = (JSONObject) parser.parse(sb.toString());
+			
+			return o;
+		} catch (Exception ex) {
+			log.error("Error - " + ex);
+			return null;
+		}
+	}
 	
+	public static JSONObject getJsonObject(String notParseJsonString){
+		JSONParser parser = new JSONParser();
+		
+		try {
+			
+			JSONObject jsonObject = (JSONObject) parser.parse(notParseJsonString);
+			return jsonObject;
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	public static JSONArray getJsonArray(String notParseJsonString){
+		JSONParser parser = new JSONParser();
+		
+		try {
+			
+			JSONArray jsonObject = (JSONArray) parser.parse(notParseJsonString);
+			return jsonObject;
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 	
 	public static JSONObject getJsonObjectLocaleFields(Map<String, String> map){
 		JSONObject obj = new JSONObject();
@@ -148,5 +200,7 @@ public class JSONGenerator {
         
         return responseArray;
 	}
+	
+	
 	
 }

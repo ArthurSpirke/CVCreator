@@ -11,11 +11,9 @@ import org.apache.log4j.Logger;
 import com.arthurspirke.cvcreator.entity.business.Person;
 import com.arthurspirke.cvcreator.entity.business.PersonalInfo;
 import com.arthurspirke.cvcreator.factory.resumeentity.HTMLFormatFactory;
+import com.arthurspirke.cvcreator.util.Utils;
 
 import static com.arthurspirke.cvcreator.util.AppProperties.*;
-import static com.arthurspirke.cvcreator.util.ImageUtils.*;
-
-
 import freemarker.template.Configuration;
 import freemarker.template.SimpleCollection;
 import freemarker.template.Template;
@@ -52,7 +50,7 @@ public class HTMLGenerator {
 		SimpleCollection employmentHistory = new SimpleCollection(person.getEmploymentHistory());
 		personInfo.put("employmentHistory", employmentHistory);
 		
-		SimpleCollection certificate = new SimpleCollection(getPathToDownloadImages(person.getCertificate()));
+		SimpleCollection certificate = new SimpleCollection(Utils.getPathToDownloadImages(person.getCertificate()));
 		personInfo.put("certificate", certificate);
 		
 		

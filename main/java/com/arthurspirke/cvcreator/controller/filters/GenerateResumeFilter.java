@@ -1,8 +1,5 @@
 package com.arthurspirke.cvcreator.controller.filters;
 
-import static com.arthurspirke.cvcreator.util.AppProperties.*;
-import static com.arthurspirke.cvcreator.util.JSONUtil.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +15,8 @@ import javax.servlet.ServletResponse;
 
 import org.json.simple.JSONObject;
 
-import com.arthurspirke.cvcreator.util.JSONUtil;
+import com.arthurspirke.cvcreator.service.JSONGenerator;
+import static com.arthurspirke.cvcreator.service.JSONParse.*;
 
 
 public class GenerateResumeFilter implements Filter {
@@ -28,21 +26,21 @@ public class GenerateResumeFilter implements Filter {
         request.setCharacterEncoding("UTF-8");
         
         BufferedReader bf = request.getReader();
-  		JSONObject jsonObject = getJSONObject(bf);
+  		JSONObject jsonObject = JSONGenerator.getJsonObject(bf);
   		Map<String, List<Map<String, String>>> additionInfo = new HashMap<>();
 
-  		additionInfo.put("phoneNumbers", getMapOnListInfo(jsonObject.get("phoneNumbers"), getPhoneNumbersKeys()));
-  		additionInfo.put("address", getMapOnListInfo(jsonObject.get("address"), getAddressKeys()));
-  		additionInfo.put("personalInfo", getMapOnListInfo(jsonObject.get("personalInfo"), getPersonalInfoKeys()));
-  		additionInfo.put("personalTemplates", getMapOnListInfo(jsonObject.get("personalTemplates"), getPersonTemplatesKeys()));
-  		additionInfo.put("personLinks", getMapOnListInfo(jsonObject.get("personLinks"), getPersonLinksKeys()));
-  		additionInfo.put("skills", getMapOnListInfo(jsonObject.get("skills"), getSkillsKeys()));
-        additionInfo.put("education", getMapOnListInfo(jsonObject.get("education"), getEducationKeys()));
-        additionInfo.put("employmentHistory", JSONUtil.special(jsonObject.get("employmentHistory")));
-        additionInfo.put("certificate", getMapOnListInfo(jsonObject.get("certificate"), getCertificateKeys()));
+  		additionInfo.put("phoneNumbers", getListMapFromJson(jsonObject.get("phoneNumbers")));
+  		additionInfo.put("address", getListMapFromJson(jsonObject.get("address")));
+  		additionInfo.put("personalInfo", getListMapFromJson(jsonObject.get("personalInfo")));
+  		additionInfo.put("personalTemplates", getListMapFromJson(jsonObject.get("personalTemplates")));
+  		additionInfo.put("personLinks", getListMapFromJson(jsonObject.get("personLinks")));
+  		additionInfo.put("skills", getListMapFromJson(jsonObject.get("skills")));
+        additionInfo.put("education", getListMapFromJson(jsonObject.get("education")));
+        additionInfo.put("employmentHistory", getListMapForEmpHistory(jsonObject.get("employmentHistory")));
+        additionInfo.put("certificate", getListMapFromJson(jsonObject.get("certificate")));
       
         request.setAttribute("operationType", jsonObject.get("operationType"));
-  		request.setAttribute("person", getMapInfo(jsonObject.get("person"), getPersonKeys()));
+  		request.setAttribute("person", getMapFromJson(jsonObject.get("person")));
   		request.setAttribute("additionInfo", additionInfo);
   		
   		chain.doFilter(request, response);

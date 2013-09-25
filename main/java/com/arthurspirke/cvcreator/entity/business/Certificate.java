@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import com.arthurspirke.cvcreator.entity.enums.ImageSize;
-import com.arthurspirke.cvcreator.util.ImageUtils;
 import com.arthurspirke.cvcreator.util.Utils;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Image;
@@ -43,7 +42,6 @@ public class Certificate extends Component{
 	}
 	
 	private Image getImageFromPath(String path){
-		if(path == null || path.equals("")) return ImageUtils.getFakeImage();
 		Image image = null;		
 		try {
 			image = Image.getInstance(new URL(path));

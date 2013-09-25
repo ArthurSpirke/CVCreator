@@ -1,6 +1,26 @@
 package com.arthurspirke.cvcreator.entity.business;
 
+import com.arthurspirke.cvcreator.util.AppProperties;
+
 public class LinksToFiles {
+	
+	private enum FileExtension{
+		PDF("pdf"),
+		DOC("doc"),
+		HTML("html");
+		
+		private String lowerCaseName;
+		
+		private FileExtension(String lowerCaseName){
+			this.lowerCaseName = lowerCaseName;
+		}
+		
+		public String getName(){
+			return lowerCaseName;
+		}
+		
+	}
+	
 	private final String id;
 	private final String personId;
 	private final String pdfFile;
@@ -8,15 +28,19 @@ public class LinksToFiles {
 	private final String htmlFile;
 
 
-	public LinksToFiles(String id, String personId, String pdfFile,
-			String docFile, String htmlFile) {
+	public LinksToFiles(String id, String personId) {
 		this.id = id;
 		this.personId = personId;
-		this.pdfFile = pdfFile;
-		this.docFile = docFile;
-		this.htmlFile = htmlFile;
+		this.pdfFile = getFullPathToFile(FileExtension.PDF.getName());
+		this.docFile = getFullPathToFile(FileExtension.DOC.getName());
+		this.htmlFile = getFullPathToFile(FileExtension.HTML.getName());
 	}
 
+	private String getFullPathToFile(String extension) {
+		String path = AppProperties.getPathToSaveFinalDocs();
+		return path + personId + "/" + personId + "." + extension;
+	}
+	
 	public String getId() {
 		return id;
 	}
