@@ -40,9 +40,8 @@ public class FieldsTitlesLangController extends HttpServlet {
             json.put("haveFieldsData", true);
         } else if("error_static".equals(type)){
             json = new JSONGenerator().getJsonObjectLocaleErros(s.getErrorStatcInfo());
-            json.put("haveErrorData", true);
         } else {
-        	
+        	throw new IllegalArgumentException();
         }
         
         json.put("currentLang", lang.toString());

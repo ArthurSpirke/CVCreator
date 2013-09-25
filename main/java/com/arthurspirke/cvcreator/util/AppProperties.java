@@ -42,7 +42,7 @@ public class AppProperties {
 	public static String getSendedEMailTitle(){return res.getString("sended_e_mail_title");}	
 	public static List<String> getStaticFieldsNames() {return Arrays.asList(Utils.replaceDollarSignToSharp(res.getString("html_fields").split(",")));}
 	public static List<String> getStaticFieldsArraysNames(){return Arrays.asList(Utils.replaceDollarSignToSharp(res.getString("html_arrays_fields").split(",")));}
-	public static List<String> getErrorStaticFields(){return Arrays.asList(Utils.replaceDollarSignToSharp(res.getString("errorStaticFields").split(",")));}
+	public static List<String> getErrorStaticFields(){return Arrays.asList(res.getString("html_error").split(","));}
 	public static String[] getPlacesIdNames(){return res.getString("places_id").split(",");}
 	public static String pathToMyLinkIcon(){return res.getString("my_link");}
 	public static String pathToLinkedinIcon(){return res.getString("linkedin");}	

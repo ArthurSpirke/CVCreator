@@ -38,9 +38,16 @@ public class JSONGenerator {
 	}
 	
 	public static JSONObject getJsonObjectLocaleErros(Map<String, String> map){
+		Set<String> keySet = map.keySet();
+		JSONArray j = new JSONArray();
+		
+		for(String key : keySet){
+			j.add(String.valueOf(key));
+		}
+		
 		JSONObject obj = new JSONObject();
 		obj.put("errorFieldsInfo", getJSONReflectionByStringMap(map));
-		obj.put("errorFieldsName", map.keySet());
+		obj.put("errorFieldsName", j);
 		obj.put("haveErrorData", true);
 		return obj;
 	}

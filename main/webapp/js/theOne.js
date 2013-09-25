@@ -2,7 +2,7 @@
 #
 #
 # File name - theOne.js
-# Create Date - 2013/09/11 12:38:16
+# Create Date - 2013/09/13 13:59:15
 #
 # Created by JSPack (https://github.com/ArthurSpirke/JSPack)
 #
@@ -461,8 +461,38 @@ function changeStaticInfoFromServer(lang, type){
 
 }
 
+//bad implementation
+function changeStaticErrorInfoFromServer(lang, type){
+    var url = "http://cvcreator-service.com:8080/CVCreator/FieldsTitlesLangController?lang=" + lang + "&type=" + type;
+    var XHR = window.XMLHttpRequest || window.XDomainRequest;
+    var xhr = new XHR();
 
-//generate resume with final data in fields.
+    xhr.open("GET", url, true);
+    xhr.onload = function(){
+        alert(xhr.responseText);
+        var resp = JSON.parse(xhr.responseText);
+
+        if(resp['haveErrorData'] == true){
+             var errors = resp['errorFieldsInfo'];
+             var emptyField = errors['.errorEmptyField'];
+            alert('empty - ' + emptyField);
+             var notEMail = errors['.errorNotValidEMail'];
+            alert('notEmail - ' + notEMail);
+             var NaN = errors['.errorNotValidInteger'];
+            alert('NaN - ' + NaN);
+            validateAll(emptyField, notEMail, NaN);
+        }
+
+    };
+    xhr.error = function(){
+
+    };
+
+    xhr.send();
+
+}
+
+
 function generateResume(){
     /*
     if(checkDataExistingInWebStorageByLang(getPrefLang())){
@@ -472,7 +502,9 @@ function generateResume(){
     }
    */
 
-	if(true)
+    changeStaticErrorInfoFromServer(getPrefLang(), 'error_static');
+    var flag = checkBadResults();
+	if(flag)
     {
 	var json = createDataToServer("GENERATE");
     var url = "http://cvcreator-service.com:8080/CVCreator/GenerateResumeController";
@@ -1452,6 +1484,8 @@ function validateAll(emptyField, notEMail, notInteger){
         }
     }
 
+    alert('validateAll - ' + document.getElementById('eMail'));
+
     validateEmail(document.getElementById('eMail'), notEMail);
     validateInteger(document.getElementById('zipCode'), notInteger);
 }
@@ -1476,10 +1510,12 @@ function validatePlainInput(validateElement, message){
 
 
 function validateEmail(email, message) {
+    alert(email);
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var isEmail = re.test(email.value);
         if(!isEmail){
             email.textContext = 'Bad';
+            email.value = '';
             email.placeholder = message;
         } else {
             email.textContext = '';
@@ -1493,6 +1529,7 @@ function validateInteger(integerElement, message){
     var isInteger = intRegex.test(integerElement.value);
         if(!isInteger){
             integerElement.textContext = 'Bad';
+            integerElement.value = '';
             integerElement.placeholder = message;
         } else {
             integerElement.textContext = '';
@@ -1503,7 +1540,6 @@ function validateInteger(integerElement, message){
 
 
 function checkBadResults() {
-    alert('Start check');
     var elem = document.getElementsByTagName('*');
     for ( var i = 0; i < elem.length; ++i) {
         if (elem[i].textContext == 'Bad') {

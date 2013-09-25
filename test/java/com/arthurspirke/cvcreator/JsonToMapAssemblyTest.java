@@ -38,7 +38,7 @@ import com.arthurspirke.cvcreator.util.JSONUtil;
 
 public class JsonToMapAssemblyTest {
 
-	
+	/*
 	private final static File FILE_WITH_JSON = new File("C:/Users/Arthur/Downloads/testJson.txt");
     JSONObject jsonObject;
 	
@@ -62,7 +62,7 @@ public class JsonToMapAssemblyTest {
 		}
 	}
 	
-	/*
+	
 	 *   "id": "0",
      *   "prefLang": "English",
      *   "personLinksCount": "2",
@@ -71,7 +71,7 @@ public class JsonToMapAssemblyTest {
      *   "eduCount": "2",
      *   "empCount": "2",
      *   "certCount": "0"
-	 */
+	 
 	@Test
 	public void testPesonJsonToMapAssembly(){
 		Map<String, String> personInfo = getMapInfo(jsonObject.get("person"), getPersonKeys());
@@ -86,14 +86,14 @@ public class JsonToMapAssemblyTest {
 		assertThat(personInfo.get("certCount"), is(equalTo("0")));		
 	}
 	
-	/*
+	
 	 *   "id": "0",
      *   "countryId": "23",
      *   "regionId": "53",
      *   "cityId": "11",
      *   "streetAddress": "Main Street",
      *   "prefLang": "English"
-	 */
+	 
 	@Test
 	public void testAddressJsonMapAssembly(){
 		List<Map<String, String>> address = getMapOnListInfo(jsonObject.get("address"), getAddressKeys());
@@ -111,7 +111,7 @@ public class JsonToMapAssemblyTest {
 	}
 	
 	
-	/*
+	
 	 *   "id": "0",
      *    "firstName": "John",
      *    "lastName": "Smith",
@@ -121,7 +121,7 @@ public class JsonToMapAssemblyTest {
      *    "profile": "My Profile",
      *    "hobbies": "My Hobbies",
      *    "state": "new"
-	 */
+	 
 	@Test
 	public void testPersonalInfoJsonMapAssembly(){
 		List<Map<String, String>> personalInfo = getMapOnListInfo(jsonObject.get("personalInfo"), getPersonalInfoKeys());
@@ -140,13 +140,13 @@ public class JsonToMapAssemblyTest {
 		
 	}
 	
-	/*
+	
 	 *   "id": "0",
      *   "templatePDF": "SIMPLE",
      *   "templateHTML": "SIMPLE",
      *   "templateDOC": "SIMPLE",
      *   "state": "new"
-	 */
+	 
 	@Test
 	public void testPersonalTemplatesJsonMapAssembly(){
 		List<Map<String, String>> personalTemplates = getMapOnListInfo(jsonObject.get("personalTemplates"), getPersonTemplatesKeys());
@@ -162,12 +162,12 @@ public class JsonToMapAssemblyTest {
 	}
 	
 	
-	/*
+	
 	 *  "phId": "0",
      *  "phoneType": "mobilePhone",
      *  "number": "+14974352623",
      *  "phState": "new"
-	 */
+	 
 	@Test
 	public void testPhoneNumbersJsonMapAssembly(){
 		List<Map<String, String>> phoneNumbers = getMapOnListInfo(jsonObject.get("phoneNumbers"), getPhoneNumbersKeys());
@@ -181,12 +181,12 @@ public class JsonToMapAssemblyTest {
 	}
 	
 	
-	/*
+	
 	 *  "linkId": "0",
      *  "linkType": "myLink",
      *  "link": "http://rerher.ru",
      *  "linkState": "new"
-	 */
+	 
 	@Test
 	public void testPersonLinksJsonMapAssembly(){
 		List<Map<String, String>> personLinks = getMapOnListInfo(jsonObject.get("personLinks"), getPersonLinksKeys());
@@ -199,12 +199,12 @@ public class JsonToMapAssemblyTest {
 		assertThat(first.get("linkState"), is(equalTo("new")));
 	}
 	
-	/*
+	
 	 *  "skillsId": "0",
      *  "skillsName": "Languages",
      *  "skillsValue": "Java, JavaScript, Scala",
      *  "skillsState": "new"
-	 */
+	 
 	@Test
 	public void testSkillsJsonMapAssembly(){
 		List<Map<String, String>> skills = getMapOnListInfo(jsonObject.get("skills"), getSkillsKeys());
@@ -217,7 +217,7 @@ public class JsonToMapAssemblyTest {
 		assertThat(first.get("skillsState"), is(equalTo("new")));
 	}
 	
-	/*
+	
 	 *  "eduId": "0",
      *  "eduType": "UNIVERSITY",
      *  "eduTitle": "MIT",
@@ -228,7 +228,7 @@ public class JsonToMapAssemblyTest {
      *  "countryId": "216",
      *  "regionId": "444",
      *  "cityId": "523"
-	 */
+	 
 	@Test
 	public void testEducationJsonMapAssembly(){
 		List<Map<String, String>> education = getMapOnListInfo(jsonObject.get("education"), getEducationKeys());
@@ -247,7 +247,7 @@ public class JsonToMapAssemblyTest {
 
 	}
 	
-	/*
+	
 	 * ---First info bucket---
 	 * 
 	 * "mainEmpInfo":
@@ -282,7 +282,7 @@ public class JsonToMapAssemblyTest {
      * "projDescription": "Love this!",
      * "projState": "new"
      *
-	 */
+	 
 	@Test
 	public void testEmploymentHistoryJsonMapAssembly(){
 		List<Map<String, String>> employmentHistory = JSONUtil.special(jsonObject.get("employmentHistory"));
@@ -327,14 +327,14 @@ public class JsonToMapAssemblyTest {
 	}
 	
 	
-	/*
+	
 	 * "certId": "0",
      * "certSize": "200x300",
      * "pathToImages": "http://gwelgjwegw.com/image.jpg",
      * "certSmallDesc": "Small Desc",
      * "certFullDesc": "Full Desc",
      * "certState": "new"
-	 */
+	 
 	@Test
 	public void testCertificateJsonMapAssembly(){
 		List<Map<String, String>> certificate = getMapOnListInfo(jsonObject.get("certificate"), getCertificateKeys());
@@ -347,5 +347,5 @@ public class JsonToMapAssemblyTest {
 		assertThat(first.get("certSmallDesc"), is(equalTo("Small Desc")));
 		assertThat(first.get("certFullDesc"), is(equalTo("Full Desc")));
 		assertThat(first.get("certState"), is(equalTo("new")));
-	}
+	}*/
 }

@@ -34,7 +34,7 @@ import com.arthurspirke.cvcreator.util.AppProperties;
 import com.arthurspirke.cvcreator.util.JSONUtil;
 
 public class MainTest {
-	private final static File FILE_WITH_JSON = new File("C:/Users/Arthur/Downloads/testJson.txt");
+	/*private final static File FILE_WITH_JSON = new File("C:/Users/Arthur/Downloads/testJson.txt");
     private static String json = "";
 	
 	@BeforeClass
@@ -96,5 +96,5 @@ public class MainTest {
         
   		
 
-	}
+	}*/
 }
