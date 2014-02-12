@@ -29,13 +29,13 @@ I have some validation functionality in my code under the comment for this momen
 
 
 
-// checkFields()
-// var res = checkBadResults();
-// alert(res);
-if (true) {
+     // checkFields()
+     // var res = checkBadResults();
+     // alert(res);
+     if (true) {
 
-        //some code
+               //some code
 
-        }
+       }
 
 In if-statement I actually use 'res' variable, where I get boolean. If true - we continue work, if false - we send some alert message to user, and fill out some fields on html page to inform user.
